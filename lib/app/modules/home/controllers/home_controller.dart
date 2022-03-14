@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
+import 'package:simbora_app/app/data/repository/user_repository.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 
 class HomeController extends GetxController {
   late TabController tabController;
 
   final repository = Get.find<RideOfferRepository>();
+  final user_repository = Get.find<UserRepository>();
 
   RxList<RideOffer> listRideOffer = <RideOffer>[].obs;
 
   @override
   void onInit() {
+    getRideOffer();
     super.onInit();
   }
 
@@ -32,5 +37,21 @@ class HomeController extends GetxController {
     });
     print('loadData');
     return listRideOffer;
+  }
+
+  Future<String>? buildAddress(double lng, double lat) async {
+    var address = await Nominatim.reverseSearch(
+      lat: lat,
+      lon: lng,
+      addressDetails: true,
+      extraTags: true,
+      nameDetails: true,
+    );
+    print(address.address);
+    if (address.address!['highway'] != null) {
+      return address.address!['highway'];
+    } else {
+      return address.address!['road'] + ', ' + address.address!['suburb'];
+    }
   }
 }

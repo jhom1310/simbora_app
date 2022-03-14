@@ -4,6 +4,10 @@
 
 import 'dart:convert';
 
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/data/repository/user_repository.dart';
+import 'package:simbora_app/app/utils/get_user.dart';
+
 RideOffer rideOfferFromJson(String str) => RideOffer.fromJson(json.decode(str));
 
 String rideOfferToJson(RideOffer data) => json.encode(data.toJson());
@@ -30,7 +34,7 @@ class RideOffer {
   DateTime createdAt;
   DateTime updateAt;
   String route;
-  int owner;
+  User owner;
   List<int> passengers;
 
   factory RideOffer.fromJson(Map<String, dynamic> json) => RideOffer(
@@ -42,7 +46,7 @@ class RideOffer {
         createdAt: DateTime.parse(json["createdAt"]),
         updateAt: DateTime.parse(json["updateAt"]),
         route: json["route"],
-        owner: json["owner"],
+        owner: User.fromJson(json["owner"]),
         passengers: List<int>.from(json["passengers"].map((x) => x)),
       );
 
@@ -55,7 +59,7 @@ class RideOffer {
         "createdAt": createdAt.toIso8601String(),
         "updateAt": updateAt.toIso8601String(),
         "route": route,
-        "owner": owner,
+        "owner": owner.id,
         "passengers": List<dynamic>.from(passengers.map((x) => x)),
       };
 }

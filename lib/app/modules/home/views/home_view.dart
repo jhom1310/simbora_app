@@ -8,6 +8,7 @@ import 'package:simbora_app/app/global/global_controller.dart';
 import 'package:simbora_app/app/global/widgets/item_rideoffer.dart';
 import 'package:simbora_app/app/global/widgets/my_top_bar.dart';
 import 'package:simbora_app/app/global/widgets/navigation_drawer.dart';
+import 'package:simbora_app/app/modules/home/views/rideoffers_list_view.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -18,9 +19,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return MyTopBar(
-      body1: biuldPromosList(
-        controller.getRideOffer(),
-      ),
+      body1: RideOfferList(),
       body2: biuldPromosList(
         controller.getRideOffer(),
       ),

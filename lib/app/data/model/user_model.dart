@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:simbora_app/app/data/repository/user_repository.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());

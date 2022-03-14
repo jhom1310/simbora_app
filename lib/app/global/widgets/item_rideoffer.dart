@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 
 class ItemRideOffer extends StatelessWidget {
@@ -12,6 +15,7 @@ class ItemRideOffer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -33,27 +37,65 @@ class ItemRideOffer extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                left: 260,
-                child: Container(
-                  height: 30,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Text(
-                          rideoffer.owner.toString(),
-                        )
-                      ],
+                child: Row(
+                  children: [
+                    Text(
+                      'Partida: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ),
+                    FutureBuilder<String>(
+                      future: controller.buildAddress(
+                        rideoffer.departurePlace.coordinates[0],
+                        rideoffer.departurePlace.coordinates[1],
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(snapshot.data!);
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
+                  ],
                 ),
               ),
               Positioned(
-                left: 159,
-                top: 30,
+                top: 20,
+                child: Row(
+                  children: [
+                    Text(
+                      'Destino: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    FutureBuilder<String>(
+                      future: controller.buildAddress(
+                        rideoffer.destination.coordinates[0],
+                        rideoffer.destination.coordinates[1],
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(snapshot.data!);
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 40,
+                child: Row(
+                  children: [
+                    Text(
+                      'Motorista: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(rideoffer.owner.firstName)
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 2,
+                right: 2,
                 child: Container(
                   //color: Colors.purpleAccent,
                   child: Column(
@@ -103,7 +145,7 @@ class ItemRideOffer extends StatelessWidget {
                                           36.0), // min sizes for Material buttons
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'PEGAR',
+                                    'DETALHES',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
