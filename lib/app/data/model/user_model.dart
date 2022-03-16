@@ -20,6 +20,7 @@ class User {
     required this.curso,
     required this.matricula,
     required this.nivel,
+    required this.avatar,
   });
 
   int id;
@@ -30,6 +31,7 @@ class User {
   String curso;
   String matricula;
   String nivel;
+  String avatar;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -40,6 +42,7 @@ class User {
         curso: json["curso"],
         matricula: json["matricula"],
         nivel: json["nivel"],
+        avatar: json["avatar"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,5 +54,6 @@ class User {
         "curso": curso,
         "matricula": matricula,
         "nivel": nivel,
+        "avatar": avatar,
       };
 }

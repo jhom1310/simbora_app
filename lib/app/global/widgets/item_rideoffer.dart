@@ -37,12 +37,11 @@ class ItemRideOffer extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
+                top: 5,
+                left: 2,
                 child: Row(
                   children: [
-                    Text(
-                      'Partida: ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    Icon(Icons.place_outlined),
                     FutureBuilder<String>(
                       future: controller.buildAddress(
                         rideoffer.departurePlace.coordinates[0],
@@ -59,13 +58,11 @@ class ItemRideOffer extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 20,
+                top: 30,
+                left: 2,
                 child: Row(
                   children: [
-                    Text(
-                      'Destino: ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    Icon(Icons.place_rounded),
                     FutureBuilder<String>(
                       future: controller.buildAddress(
                         rideoffer.destination.coordinates[0],
@@ -82,14 +79,22 @@ class ItemRideOffer extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 40,
+                top: 55,
+                left: 2,
                 child: Row(
                   children: [
-                    Text(
-                      'Motorista: ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    Icon(Icons.person),
                     Text(rideoffer.owner.firstName)
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 80,
+                left: 2,
+                child: Row(
+                  children: [
+                    Icon(Icons.watch_later_rounded),
+                    Text(rideoffer.departureTime.toString())
                   ],
                 ),
               ),
@@ -97,71 +102,13 @@ class ItemRideOffer extends StatelessWidget {
                 bottom: 2,
                 right: 2,
                 child: Container(
-                  //color: Colors.purpleAccent,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              print('Favoritou');
-                            },
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: 90,
-                            ),
-                            child: RaisedButton(
-                              elevation: 5.00,
-                              onPressed: () {
-                                Get.toNamed(Routes.HOME, arguments: rideoffer);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(80.0)),
-                              padding: const EdgeInsets.all(0.0),
-                              child: Ink(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerRight,
-                                    end: Alignment.centerLeft,
-                                    colors: [
-                                      Color(0xfffd7d06),
-                                      Color(0xfffeb105),
-                                      Color(0xfffdff02),
-                                    ],
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(80.0)),
-                                ),
-                                child: Container(
-                                  constraints: const BoxConstraints(
-                                      minWidth: 88.0,
-                                      minHeight:
-                                          36.0), // min sizes for Material buttons
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'DETALHES',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+                    margin: EdgeInsets.only(
+                      left: 90,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_forward_rounded),
+                      onPressed: () {},
+                    )),
               ),
             ], //Chi
           ),

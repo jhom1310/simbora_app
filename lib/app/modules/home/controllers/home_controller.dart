@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/data/repository/auth_repository.dart';
 import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
 import 'package:simbora_app/app/data/repository/user_repository.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
@@ -12,6 +13,7 @@ class HomeController extends GetxController {
 
   final repository = Get.find<RideOfferRepository>();
   final user_repository = Get.find<UserRepository>();
+  final auth_repository = Get.find<AuthRepository>();
 
   RxList<RideOffer> listRideOffer = <RideOffer>[].obs;
 
@@ -53,5 +55,9 @@ class HomeController extends GetxController {
     } else {
       return address.address!['road'] + ', ' + address.address!['suburb'];
     }
+  }
+
+  Future<void> logoutOnPressed() async {
+    await auth_repository.authLogout();
   }
 }

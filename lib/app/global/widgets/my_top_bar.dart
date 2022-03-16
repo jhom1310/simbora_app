@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/global/global_user_info_controller.dart';
+import 'package:simbora_app/app/global/widgets/drawer_custom.dart';
+import 'package:simbora_app/app/global/widgets/navigation_drawer.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 
 class MyTopBar extends StatefulWidget {
@@ -17,6 +21,7 @@ class MyTopBar extends StatefulWidget {
 class _MyTabbedPageState extends State<MyTopBar>
     with SingleTickerProviderStateMixin {
   final controller = Get.find<HomeController>();
+  final globalController = Get.find<GlobalUserInfoController>();
 
   @override
   void initState() {
@@ -33,11 +38,32 @@ class _MyTabbedPageState extends State<MyTopBar>
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
+    final User? userSession = globalController.getSession;
+    var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
+      drawer: DrawerCustom(
+        user: userSession,
+      ),
       appBar: AppBar(
-        toolbarHeight: 4,
+        //toolbarHeight: 4,
         elevation: 0,
-        backgroundColor: Colors.white12,
+        //backgroundColor: Colors.yellow,
+        leading: IconButton(
+          icon: Icon(
+            Icons.person,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
+
+        title: Text(
+          'SIMBORA',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
         bottom: TabBar(
           controller: controller.tabController,
           tabs: [

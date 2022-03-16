@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
+class DrawerCustom extends StatelessWidget {
+  static const padding = EdgeInsets.symmetric(horizontal: 20);
+  final User? user;
+  const DrawerCustom({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final name = 'Sarah Abs';
-    final email = 'sarah@abs.com';
-    final urlImage =
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80';
-
+    final controller = Get.find<HomeController>();
     return Drawer(
       child: Material(
         color: Color(0xffffCB05),
         child: ListView(
           children: <Widget>[
             buildHeader(
-                urlImage: urlImage,
-                name: name,
-                email: email,
+                urlImage: user!.avatar,
+                name: user!.firstName,
+                email: user!.email,
+                curso: user!.curso,
+                matricula: user!.matricula,
                 onClicked: () => {}),
             Container(
               padding: padding,
@@ -61,7 +68,9 @@ class NavigationDrawerWidget extends StatelessWidget {
                   buildMenuItem(
                     text: 'Sair',
                     icon: Icons.exit_to_app,
-                    onClicked: () => selectedItem(context, 5),
+                    onClicked: () {
+                      controller.logoutOnPressed();
+                    },
                   ),
                 ],
               ),
@@ -76,6 +85,8 @@ class NavigationDrawerWidget extends StatelessWidget {
     required String urlImage,
     required String name,
     required String email,
+    required String curso,
+    required String matricula,
     required VoidCallback onClicked,
   }) =>
       InkWell(
@@ -89,14 +100,34 @@ class NavigationDrawerWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: TextStyle(fontSize: 20),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      name,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    email,
-                    style: TextStyle(fontSize: 14),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      email,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      curso,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      matricula,
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
                 ],
               ),
@@ -119,22 +150,5 @@ class NavigationDrawerWidget extends StatelessWidget {
       ),
       onTap: onClicked,
     );
-  }
-
-  void selectedItem(BuildContext context, int index) {
-    /* Navigator.of(context).pop();
-
-    switch (index) {
-      case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PeoplePage(),
-        ));
-        break;
-      case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => FavouritesPage(),
-        ));
-        break;
-    } */
   }
 }
