@@ -94,7 +94,8 @@ class ItemRideOffer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.watch_later_rounded),
-                    Text(rideoffer.departureTime.toString())
+                    Text(
+                        '${rideoffer.dates.first.day}/${rideoffer.dates.first.month}/${rideoffer.dates.first.year} - ${rideoffer.dates.first.hour}:${rideoffer.dates.first.minute}')
                   ],
                 ),
               ),

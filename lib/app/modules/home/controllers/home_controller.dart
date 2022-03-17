@@ -19,7 +19,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    getRideOffer();
+    //getRideOffer();
     super.onInit();
   }
 
@@ -49,7 +49,6 @@ class HomeController extends GetxController {
       extraTags: true,
       nameDetails: true,
     );
-    print(address.address);
     if (address.address!['highway'] != null) {
       return address.address!['highway'];
     } else {

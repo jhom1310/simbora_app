@@ -104,7 +104,10 @@ class DrawerCustom extends StatelessWidget {
                     width: 180,
                     child: Text(
                       name,
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -115,6 +118,7 @@ class DrawerCustom extends StatelessWidget {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
+                  SizedBox(height: 5),
                   Container(
                     width: 180,
                     child: Text(
@@ -122,6 +126,7 @@ class DrawerCustom extends StatelessWidget {
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
+                  SizedBox(height: 5),
                   Container(
                     width: 180,
                     child: Text(
