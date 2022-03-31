@@ -11,7 +11,7 @@ import 'package:simbora_app/app/data/provider/headers.dart';
 import 'package:simbora_app/app/database/store.dart';
 import 'package:simbora_app/app/database/store_keys.dart';
 import 'package:simbora_app/app/database/auth_token.dart';
-import 'package:simbora_app/app/global/global_user_info_controller.dart';
+import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/ask_dialog.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';

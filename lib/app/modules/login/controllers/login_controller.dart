@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/login_model.dart';
 import 'package:simbora_app/app/data/model/login_sigaa_model.dart';
+import 'package:simbora_app/app/database/auth_token.dart';
+import 'package:simbora_app/app/global/controllers/websocket_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 import 'package:simbora_app/app/data/repository/auth_repository.dart';
 
@@ -11,6 +13,8 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController ctrlEmail = TextEditingController();
   TextEditingController ctrlPass = TextEditingController();
+
+  final wsController = Get.find<WebSocketController>();
 
   final rememberMe = false.obs;
   final show = true.obs;
@@ -44,13 +48,12 @@ class LoginController extends GetxController {
     var login = AuthLogin(email: ctrlEmail.text, password: ctrlPass.text);
     await repository.authLogin(login).then((auth) {
       if (auth != null) {
-        //box.write('auth', auth);
         Get.offAllNamed(Routes.HOME);
       }
       //loading.value = false;
     }).catchError((err) {
       //loading.value = false;
-      print('erro no controller: ${err}');
+      print('erro no controller: $err');
     });
   }
 
@@ -60,12 +63,13 @@ class LoginController extends GetxController {
     await repository.authLoginSigaa(login).then((auth) {
       if (auth != null) {
         //box.write('auth', auth);
+        Get.find<WebSocketController>().startStream(AuthToken.token!);
         Get.offAllNamed(Routes.HOME);
       }
       //loading.value = false;
     }).catchError((err) {
       //loading.value = false;
-      print('erro no controller: ${err}');
+      print('erro no controller: $err');
     });
   }
 }

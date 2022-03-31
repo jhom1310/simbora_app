@@ -1,0 +1,218 @@
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:osm_nominatim/osm_nominatim.dart';
+import 'package:simbora_app/app/data/model/addrres_model.dart';
+import 'package:simbora_app/app/global/widgets/InputTF.dart';
+import 'package:simbora_app/app/utils/validators.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import '../controllers/create_rideoffer_controller.dart';
+
+class CreateRideofferView extends GetView<CreateRideofferController> {
+  final controller = Get.find<CreateRideofferController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criar Oferta de Carona'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+
+                // If the form is valid, display a snackbar. In the real world,
+                // you'd often call a server or save the information in a database.
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Processing Data')),
+                );
+              },
+              icon: Icon(Icons.save))
+        ],
+      ),
+      body: Container(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
+          child: Form(
+            key: controller.createRideOfferFormKey,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      //color: Colors.green,
+                      width: Get.width * 0.60,
+                      child: InputTF(
+                        icon: Icon(Icons.place, color: Colors.grey),
+                        text: 'Rua de partida ou Local',
+                        validator: (name) => null,
+                        ctrlText: controller.ctrlDeparture,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      //color: Colors.green,
+                      width: Get.width * 0.20,
+                      child: InputTF(
+                        icon: Icon(Icons.house, color: Colors.grey),
+                        text: 'N°',
+                        validator: (name) => null,
+                        ctrlText: controller.ctrlDepartureNumber,
+                      ),
+                    ),
+                    Container(
+                      width: Get.width * 0.1,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.search,
+                        ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          controller.searchAddress(
+                            controller.ctrlDeparture.text,
+                            controller.ctrlDepartureNumber.text,
+                            0,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => controller.loading.value
+                      ? CircularProgressIndicator()
+                      : controller.check.value
+                          ? DropdownButtonFormField(
+                              isExpanded: true,
+                              itemHeight: 130,
+                              value: controller.selectedAddress.value,
+                              hint: Text('Selecione um endereço'),
+                              items: controller.addressList
+                                  .map<DropdownMenuItem<Address>>(
+                                      (Address value) {
+                                return DropdownMenuItem<Address>(
+                                  value: value,
+                                  child: Text(value.displayName),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                FocusScope.of(context).unfocus();
+                                controller.selectedAddress.value =
+                                    newValue as Address;
+                              },
+                            )
+                          : Container(),
+                ),
+                //////////////////////////////////////////////////////////////////////
+                Row(
+                  children: [
+                    Container(
+                      //color: Colors.green,
+                      width: Get.width * 0.60,
+                      child: InputTF(
+                        icon: Icon(Icons.place, color: Colors.grey),
+                        text: 'Rua Destino',
+                        validator: (name) => null,
+                        ctrlText: controller.ctrlDestination,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      //color: Colors.green,
+                      width: Get.width * 0.20,
+                      child: InputTF(
+                        icon: Icon(Icons.house, color: Colors.grey),
+                        text: 'N°',
+                        validator: (name) => null,
+                        ctrlText: controller.ctrlDestinationNumber,
+                      ),
+                    ),
+                    Container(
+                      //color: Colors.green,
+                      width: Get.width * 0.1,
+                      child: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          controller.searchAddress(
+                            controller.ctrlDestination.text,
+                            controller.ctrlDestinationNumber.text,
+                            1,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => controller.loading.value
+                      ? CircularProgressIndicator()
+                      : controller.check2.value
+                          ? DropdownButton(
+                              isExpanded: true,
+                              itemHeight: 130,
+                              value:
+                                  controller.selectedAddressDestination.value,
+                              hint: Text('Selecione um endereço'),
+                              items: controller.addressDestinationList
+                                  .map<DropdownMenuItem<Address>>(
+                                      (Address value) {
+                                return DropdownMenuItem<Address>(
+                                  value: value,
+                                  child: Text(value.displayName),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                FocusScope.of(context).unfocus();
+                                controller.selectedAddressDestination.value =
+                                    newValue as Address;
+                              },
+                            )
+                          : Container(),
+                ),
+                Container(
+                    child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Selecione os dias que a corana vai ocorrer:",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    Container(
+                      height: Get.height * 0.3,
+                      margin: EdgeInsets.all(0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black54)),
+                      child: SfDateRangePicker(
+                        enablePastDates: false,
+                        onSelectionChanged: controller.onSelectionChanged,
+                        view: DateRangePickerView.month,
+                        todayHighlightColor: Colors.black,
+                        selectionColor: Colors.orange,
+                        rangeSelectionColor: Colors.orange,
+                        startRangeSelectionColor: Colors.deepOrange,
+                        endRangeSelectionColor: Colors.deepOrange,
+                        monthViewSettings: DateRangePickerMonthViewSettings(
+                          firstDayOfWeek: 1,
+                        ),
+                        selectionMode: DateRangePickerSelectionMode.multiple,
+                      ),
+                    ),
+                  ],
+                )),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -16,6 +16,12 @@ String? nameValidator(String? name) {
   return null;
 }
 
+String? addressValidator(String? text) {
+  if (text!.trim().isEmpty || text.isEmpty) return 'Informe os dados';
+
+  return null;
+}
+
 //Validar gênero
 String? genderValidator(String? gender) {
   if (gender == null) return 'Selecione seu gênero';

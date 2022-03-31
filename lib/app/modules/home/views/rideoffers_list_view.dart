@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/global/widgets/item_rideoffer.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
+import 'package:simbora_app/app/routes/app_pages.dart';
 
 class RideOfferList extends StatelessWidget {
   const RideOfferList({
@@ -65,7 +66,9 @@ class RideOfferList extends StatelessWidget {
             width: Get.width * 0.97,
             child: ElevatedButton(
               child: Text('Criar Oferta de Carona'),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.CREATE_RIDEOFFER);
+              },
             ),
           ),
         ),

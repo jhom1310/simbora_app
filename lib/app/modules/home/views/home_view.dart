@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 
-import 'package:simbora_app/app/global/global_controller.dart';
+import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/widgets/item_rideoffer.dart';
 import 'package:simbora_app/app/global/widgets/my_top_bar.dart';
 import 'package:simbora_app/app/global/widgets/navigation_drawer.dart';
@@ -19,11 +19,14 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return MyTopBar(
-      body1: RideOfferList(),
-      body2: biuldPromosList(
-        controller.getRideOffer(),
-      ),
-    );
+        body1: RideOfferList(),
+        body2: Obx(
+          () => Container(
+            child: Text(
+              controller.wscontroller.data.toString(),
+            ),
+          ),
+        ));
   }
 
   Widget biuldPromosList(Future<List<RideOffer>> list) =>

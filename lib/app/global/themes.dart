@@ -31,10 +31,15 @@ class Themes {
       labelColor: Colors.black,
     ),
     appBarTheme: AppBarTheme(
-      elevation: 0,
-      systemOverlayStyle: SystemUiOverlayStyle.light,
-      backgroundColor: Color(0xffffCB05),
-    ),
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        backgroundColor: Color(0xffffCB05),
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        actionsIconTheme: IconThemeData(color: Colors.black)),
   );
 
   final darkTheme = ThemeData.dark().copyWith(
@@ -51,7 +56,7 @@ class Themes {
         ),
       ),
     ),
-    indicatorColor: Color(0xffffCB05),
+    indicatorColor: Colors.black,
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.white),
@@ -62,10 +67,19 @@ class Themes {
         ),
       ),
     ),
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.black,
+    ),
     appBarTheme: AppBarTheme(
       elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       backgroundColor: Colors.yellow[700],
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      actionsIconTheme: IconThemeData(color: Colors.black),
     ),
   );
 }

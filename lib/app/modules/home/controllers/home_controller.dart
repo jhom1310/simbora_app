@@ -6,7 +6,10 @@ import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/repository/auth_repository.dart';
 import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
 import 'package:simbora_app/app/data/repository/user_repository.dart';
+import 'package:simbora_app/app/global/controllers/global_controller.dart';
+import 'package:simbora_app/app/global/controllers/websocket_controller.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
+import 'package:latlong2/latlong.dart';
 
 class HomeController extends GetxController {
   late TabController tabController;
@@ -14,6 +17,8 @@ class HomeController extends GetxController {
   final repository = Get.find<RideOfferRepository>();
   final user_repository = Get.find<UserRepository>();
   final auth_repository = Get.find<AuthRepository>();
+  final globalcontroller = Get.find<GlobalController>();
+  final wscontroller = Get.find<WebSocketController>();
 
   RxList<RideOffer> listRideOffer = <RideOffer>[].obs;
 
@@ -30,6 +35,7 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
+
   Future<List<RideOffer>> getRideOffer() async {
     //return await repository.getAll();
     await repository.getAllRideOffer().then((value) {
