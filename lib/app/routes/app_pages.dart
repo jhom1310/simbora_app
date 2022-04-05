@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+
 import '../modules/create_rideoffer/bindings/create_rideoffer_binding.dart';
 import '../modules/create_rideoffer/views/create_rideoffer_view.dart';
+import '../modules/detail_rideoffer/bindings/detail_rideoffer_binding.dart';
+import '../modules/detail_rideoffer/views/detail_rideoffer_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -42,6 +45,11 @@ class AppPages {
       name: _Paths.CREATE_RIDEOFFER,
       page: () => CreateRideofferView(),
       binding: CreateRideofferBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_RIDEOFFER,
+      page: () => DetailRideofferView(),
+      binding: DetailRideofferBinding(),
     ),
   ];
 }

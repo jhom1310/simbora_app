@@ -108,7 +108,8 @@ class ItemRideOffer extends StatelessWidget {
                     ),
                     child: IconButton(
                       icon: Icon(Icons.arrow_forward_rounded),
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(Routes.DETAIL_RIDEOFFER,
+                          arguments: rideoffer),
                     )),
               ),
             ], //Chi

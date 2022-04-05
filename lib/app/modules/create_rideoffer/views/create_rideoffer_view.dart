@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-
 import 'package:get/get.dart';
-
-import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../controllers/create_rideoffer_controller.dart';

@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 
-import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/widgets/item_rideoffer.dart';
 import 'package:simbora_app/app/global/widgets/my_top_bar.dart';
-import 'package:simbora_app/app/global/widgets/navigation_drawer.dart';
+
 import 'package:simbora_app/app/modules/home/views/rideoffers_list_view.dart';
-import 'package:simbora_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 

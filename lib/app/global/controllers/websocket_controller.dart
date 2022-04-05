@@ -27,7 +27,13 @@ class WebSocketController extends GetxController {
       (event) {
         data.add(json.decode(event)['message']);
         print(json.decode(event)['message']);
-        sendNotification(json.decode(event)['message']);
+        var action = json.decode(event)['message'];
+        switch (action) {
+          case 'refresh_notification':
+            sendNotification(json.decode(event)['message']);
+            break;
+          default:
+        }
       },
       onDone: () {
         isWebsocketRunning = false;
