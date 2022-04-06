@@ -54,20 +54,6 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
                         controller.pointDestination.value),
                   ],
                 ),
-                /* PolylineLayerOptions(polylines: [
-                  Polyline(
-                    points: [
-                      LatLng(-5.203293, -37.32555),
-                      LatLng(-5.209332, -37.333736),
-                      LatLng(-5.210205, -37.333206),
-                      LatLng(-5.21066, -37.334032),
-                      LatLng(-5.21001, -37.334638),
-                      LatLng(-5.218444, -37.340479)
-                    ],
-                    strokeWidth: 2.0,
-                    color: Colors.red,
-                  ),
-                ]), */
               ],
             ),
           ),

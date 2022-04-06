@@ -10,6 +10,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/requests_for_ride/bindings/requests_for_ride_binding.dart';
+import '../modules/requests_for_ride/views/requests_for_ride_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.DETAIL_RIDEOFFER,
       page: () => DetailRideofferView(),
       binding: DetailRideofferBinding(),
+    ),
+    GetPage(
+      name: _Paths.REQUESTS_FOR_RIDE,
+      page: () => RequestsForRideView(),
+      binding: RequestsForRideBinding(),
     ),
   ];
 }

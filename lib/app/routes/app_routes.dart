@@ -9,6 +9,7 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const CREATE_RIDEOFFER = _Paths.CREATE_RIDEOFFER;
   static const DETAIL_RIDEOFFER = _Paths.DETAIL_RIDEOFFER;
+  static const REQUESTS_FOR_RIDE = _Paths.REQUESTS_FOR_RIDE;
 }
 
 abstract class _Paths {
@@ -18,4 +19,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const CREATE_RIDEOFFER = '/create-rideoffer';
   static const DETAIL_RIDEOFFER = '/detail-rideoffer';
+  static const REQUESTS_FOR_RIDE = '/requests-for-ride';
 }

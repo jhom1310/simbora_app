@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
+
+import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../env.dart';
 
@@ -26,10 +28,11 @@ class WebSocketController extends GetxController {
     channel!.stream.listen(
       (event) {
         data.add(json.decode(event)['message']);
-        print(json.decode(event)['message']);
-        var action = json.decode(event)['message'];
+        //print(json.decode(event)['message']);
+        var action = json.decode(event)['action'];
+
         switch (action) {
-          case 'refresh_notification':
+          case 'request_for_ride':
             sendNotification(json.decode(event)['message']);
             break;
           default:
@@ -54,13 +57,16 @@ class WebSocketController extends GetxController {
     isWebsocketRunning = false;
   }
 
-  void sendNotification(String content) async {
+  void sendNotification(content) async {
+    String user = content['sender']['first_name'];
+    var avatar = content['sender']['avatar'];
     AwesomeNotifications().createNotification(
         content: NotificationContent(
             id: 100,
             channelKey: "notifications_channel",
             title: "Nova Solicitação",
-            body: content,
+            body:
+                '${user.substring(0, 15)}... solicitou participar da sua carona.',
             showWhen: true,
             payload: {"secret": "Awesome Notifications Rocks!"}));
   }

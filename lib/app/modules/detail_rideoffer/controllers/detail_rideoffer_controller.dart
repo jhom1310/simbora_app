@@ -1,10 +1,18 @@
 import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/request_for_ride.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/data/repository/request_for_ride_repository.dart';
 import 'dart:convert';
+
+import 'package:simbora_app/app/global/controllers/global_controller.dart';
+import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 
 class DetailRideofferController extends GetxController {
   final RideOffer rideoffer = Get.arguments;
+  final globalUserController = Get.find<GlobalUserInfoController>();
+  final repository = Get.find<RequestForRideRepository>();
 
   late Rx pointDeparture = LatLng(rideoffer.departurePlace.coordinates[1],
           rideoffer.departurePlace.coordinates[0])
@@ -18,6 +26,33 @@ class DetailRideofferController extends GetxController {
       jsonDecode(rideoffer.route.replaceAll("'", "\""))['route']
           .map((x) => LatLng(x[1], x[0])));
 
+  //Sollicitação de Carona
+  final globalcontroller = Get.find<GlobalController>();
+  late Rx pointDepartureRequest = LatLng(globalcontroller.userPosition.latitude,
+          globalcontroller.userPosition.longitude)
+      .obs;
+
+  Future<void> addOnPressed() async {
+    final User? userSession = globalUserController.getSession;
+
+    var request = RequestForRide(
+      id: 0,
+      sender: userSession!,
+      receiver: rideoffer.owner,
+      ride: rideoffer,
+      isSeen: false,
+      location: Location(
+        type: "Point",
+        coordinates: [
+          pointDepartureRequest.value.longitude,
+          pointDepartureRequest.value.latitude
+        ],
+      ),
+    );
+    await repository.createRequestForRide(request);
+  }
+
+  ////
   @override
   void onInit() {
     super.onInit();
