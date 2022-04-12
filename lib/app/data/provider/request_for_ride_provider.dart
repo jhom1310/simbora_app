@@ -45,10 +45,10 @@ class RequestForRideConnect extends GetConnect {
   Future<Response> rejectRequestForRide(RequestForRide request) async {
     Get.log('Content: ' + request.toJson().toString());
     final response = await post(
-      BASE_URL + '/api/addorremoverequest/',
+      BASE_URL + '/api/deleterequestforride/',
       {
         "user_pk": request.sender.id,
-        "operation": "remove",
+        "operation": "receiver_deleting",
       },
       headers: Headers.headers,
     );
