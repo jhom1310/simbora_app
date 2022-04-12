@@ -27,4 +27,32 @@ class RequestForRideConnect extends GetConnect {
     Get.log(response.body.toString());
     return response;
   }
+
+  Future<Response> acceptRequestForRide(RequestForRide request) async {
+    Get.log('Content: ' + request.toJson().toString());
+    final response = await post(
+      BASE_URL + '/api/addorremoverequest/',
+      {
+        "user_pk": request.sender.id,
+        "operation": "add",
+      },
+      headers: Headers.headers,
+    );
+    Get.log(response.body.toString());
+    return response;
+  }
+
+  Future<Response> rejectRequestForRide(RequestForRide request) async {
+    Get.log('Content: ' + request.toJson().toString());
+    final response = await post(
+      BASE_URL + '/api/addorremoverequest/',
+      {
+        "user_pk": request.sender.id,
+        "operation": "remove",
+      },
+      headers: Headers.headers,
+    );
+    Get.log(response.body.toString());
+    return response;
+  }
 }

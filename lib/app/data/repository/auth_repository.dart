@@ -87,11 +87,11 @@ class AuthRepository {
     } else {
       /* Map<String, dynamic> reponseData =
           json.decode(utf8.decode(response.bodyString!.runes.toList())); */
+      var error = jsonDecode(response.body.toString());
 
-      final String erroMsg = getErroMessage(response.body);
+      //final String erroMsg = getErroMessage(response.body);
 
-      //Mostra o dialog de erro
-      Get.dialog(FailureDialog(erroMsg));
+      Get.dialog(FailureDialog(error['erro']));
     }
   }
 

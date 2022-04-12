@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
@@ -21,9 +22,29 @@ class CreateRideofferController extends GetxController {
 
   RxList<DateTime> selectedDates = <DateTime>[].obs;
 
-  void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    selectedDates.assignAll(args.value);
-    selectedDates.sort();
+  Future<void> onSelectionChanged(
+      DateRangePickerSelectionChangedArgs args) async {
+    List<dynamic> stringsdates =
+        args.value.map((d) => d.toString().substring(0, 10)).toList();
+    print(stringsdates);
+
+    Iterable<DateTime> diff = selectedDates.where((element) =>
+        !stringsdates.contains((element.toString().substring(0, 10))));
+
+    //print(diff);
+
+    if (diff.isNotEmpty) {
+      selectedDates.remove(diff.first);
+      //print(selectedDates);
+    } else {
+      final TimeOfDay? newTime = await showTimePicker(
+          context: Get.context!, initialTime: TimeOfDay(hour: 9, minute: 00));
+
+      selectedDates.add(DateTime(args.value.last.year, args.value.last.month,
+          args.value.last.day, newTime!.hour, newTime.minute));
+      selectedDates.sort();
+      //print(selectedDates);
+    }
   }
 
   Future<void> addOnPressed() async {

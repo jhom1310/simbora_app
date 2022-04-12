@@ -5,6 +5,8 @@ import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class ItemRideOffer extends StatelessWidget {
   final RideOffer rideoffer;
@@ -16,6 +18,8 @@ class ItemRideOffer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
+    initializeDateFormatting('pt_BR', null);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -94,8 +98,7 @@ class ItemRideOffer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.watch_later_rounded),
-                    Text(
-                        '${rideoffer.dates.first.day}/${rideoffer.dates.first.month}/${rideoffer.dates.first.year} - ${rideoffer.dates.first.hour}:${rideoffer.dates.first.minute}')
+                    Text(DateFormat.Hms('pt_BR').format(rideoffer.dates.last))
                   ],
                 ),
               ),
@@ -109,7 +112,7 @@ class ItemRideOffer extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.arrow_forward_rounded),
                       onPressed: () => Get.toNamed(Routes.DETAIL_RIDEOFFER,
-                          arguments: rideoffer),
+                          arguments: rideoffer.obs),
                     )),
               ),
             ], //Chi

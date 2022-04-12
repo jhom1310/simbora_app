@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/repository/request_for_ride_repository.dart';
+import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
 
 import '../controllers/detail_rideoffer_controller.dart';
 
@@ -8,5 +9,6 @@ class DetailRideofferBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<DetailRideofferController>(() => DetailRideofferController());
     Get.lazyPut<RequestForRideRepository>(() => RequestForRideRepository());
+    Get.lazyPut<RideOfferRepository>(() => RideOfferRepository());
   }
 }

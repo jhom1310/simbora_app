@@ -105,7 +105,9 @@ class RequestsForRideView extends GetView<RequestsForRideController> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.acceptRequest(request);
+                    },
                     icon: Icon(
                       CupertinoIcons.check_mark_circled,
                       size: 30.0,
@@ -113,7 +115,9 @@ class RequestsForRideView extends GetView<RequestsForRideController> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.rejectRequest(request);
+                    },
                     icon: Icon(
                       CupertinoIcons.xmark_circle,
                       size: 30.0,

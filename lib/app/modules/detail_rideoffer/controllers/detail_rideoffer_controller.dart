@@ -4,26 +4,28 @@ import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/repository/request_for_ride_repository.dart';
+import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
 import 'dart:convert';
 
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 
 class DetailRideofferController extends GetxController {
-  final RideOffer rideoffer = Get.arguments;
+  Rx rideoffer = Get.arguments;
   final globalUserController = Get.find<GlobalUserInfoController>();
   final repository = Get.find<RequestForRideRepository>();
+  final riderepository = Get.find<RideOfferRepository>();
 
-  late Rx pointDeparture = LatLng(rideoffer.departurePlace.coordinates[1],
-          rideoffer.departurePlace.coordinates[0])
+  late Rx pointDeparture = LatLng(rideoffer.value.departurePlace.coordinates[1],
+          rideoffer.value.departurePlace.coordinates[0])
       .obs;
   late Rx<LatLng> pointDestination = LatLng(
-          rideoffer.destination.coordinates[1],
-          rideoffer.destination.coordinates[0])
+          rideoffer.value.destination.coordinates[1],
+          rideoffer.value.destination.coordinates[0])
       .obs;
 
   late List<LatLng> routelatlng = List<LatLng>.from(
-      jsonDecode(rideoffer.route.replaceAll("'", "\""))['route']
+      jsonDecode(rideoffer.value.route.replaceAll("'", "\""))['route']
           .map((x) => LatLng(x[1], x[0])));
 
   //Sollicitação de Carona
@@ -38,8 +40,8 @@ class DetailRideofferController extends GetxController {
     var request = RequestForRide(
       id: 0,
       sender: userSession!,
-      receiver: rideoffer.owner,
-      ride: rideoffer,
+      receiver: rideoffer.value.owner,
+      ride: rideoffer.value,
       isSeen: false,
       location: Location(
         type: "Point",
@@ -52,9 +54,14 @@ class DetailRideofferController extends GetxController {
     await repository.createRequestForRide(request);
   }
 
+  Future<void> attrideoffer() async {
+    rideoffer.value = await riderepository.getRideOffer(rideoffer.value.id);
+  }
+
   ////
   @override
   void onInit() {
+    attrideoffer();
     super.onInit();
   }
 

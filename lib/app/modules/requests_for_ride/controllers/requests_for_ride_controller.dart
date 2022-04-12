@@ -4,6 +4,7 @@ import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/repository/request_for_ride_repository.dart';
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
+import 'package:simbora_app/app/global/widgets/dialogs/ask_dialog.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -36,5 +37,29 @@ class RequestsForRideController extends GetxController {
     });
 
     return listRequestForRide;
+  }
+
+  Future<void> acceptRequest(RequestForRide request) async {
+    Get.dialog(AskDialog(
+            title: "Aceitar Solicitação",
+            content:
+                "Você tem certeza que deseja adicionar ${request.sender.firstName} a carona?"))
+        .then((value) async {
+      if (value != null && value) {
+        await repository.acceptRequestForRide(request);
+      }
+    });
+  }
+
+  Future<void> rejectRequest(RequestForRide request) async {
+    Get.dialog(AskDialog(
+            title: "Rejeitar Solicitação",
+            content:
+                "Você tem certeza que deseja rejeitar a solicitação de ${request.sender.firstName}?"))
+        .then((value) async {
+      if (value != null && value) {
+        await repository.rejectRequestForRide(request);
+      }
+    });
   }
 }

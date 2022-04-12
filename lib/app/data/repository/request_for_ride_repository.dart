@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/request_for_ride.dart';
+import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/provider/request_for_ride_provider.dart';
+import 'package:simbora_app/app/data/repository/ride_offer_repository.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
+import 'package:simbora_app/app/modules/detail_rideoffer/controllers/detail_rideoffer_controller.dart';
+import 'package:simbora_app/app/routes/app_pages.dart';
 import 'package:simbora_app/app/utils/errors_message.dart';
 
 class RequestForRideRepository {
   final RequestForRideConnect api = RequestForRideConnect();
   //final AuthApiClient apo = AuthApiClient();
+  final RideOfferRepository repositoryRide = RideOfferRepository();
 
   getAllRequestForRide(User? user) async {
     final response = await api.getAllRequestForRide(user);
@@ -49,6 +54,48 @@ class RequestForRideRepository {
       //Mostra o dialog de erro
       await Get.dialog(
           SuccessDialog('Solicitação de carona criada com sucesso!\n'));
+      Get.back();
+    } else {
+      /* Map<String, dynamic> reponseData =
+          json.decode(utf8.decode(response.bodyString!.runes.toList())); */
+      final String erroMsg = getErroMessage(response.body);
+
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
+  Future<void> acceptRequestForRide(RequestForRide request) async {
+    final Response response = await api.acceptRequestForRide(request);
+    //isLoading = false;
+
+    //Sucesso
+    if (response.isOk) {
+      //Mostra o dialog de erro
+      await Get.dialog(SuccessDialog('Passageiro adicionado com sucesso!\n'));
+      final controller = Get.find<DetailRideofferController>();
+      await controller.attrideoffer();
+      Get.back();
+    } else {
+      /* Map<String, dynamic> reponseData =
+          json.decode(utf8.decode(response.bodyString!.runes.toList())); */
+      final String erroMsg = getErroMessage(response.body);
+
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
+  Future<void> rejectRequestForRide(RequestForRide request) async {
+    final Response response = await api.rejectRequestForRide(request);
+    //isLoading = false;
+
+    //Sucesso
+    if (response.isOk) {
+      //Mostra o dialog de erro
+      await Get.dialog(SuccessDialog('Passageiro rejeitado com sucesso!\n'));
+      final controller = Get.find<DetailRideofferController>();
+      await controller.attrideoffer();
       Get.back();
     } else {
       /* Map<String, dynamic> reponseData =

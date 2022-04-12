@@ -23,7 +23,7 @@ class RideOfferConnect extends GetConnect {
 
   ///Busca uma oferta de carona por id
   Future<Response> getRideOffer(int id) async {
-    final response = await get('/api/rideoffer/$id',
+    final response = await get(BASE_URL + '/api/rideoffer/$id',
         headers: Headers.headers,
         contentType: 'application/json; charset=utf-8');
     Get.log(response.body.toString());

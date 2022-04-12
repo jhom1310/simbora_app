@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
-
+import 'package:intl/intl.dart';
 import '../controllers/detail_rideoffer_controller.dart';
 
 class DetailRideofferView extends GetView<DetailRideofferController> {
@@ -15,12 +15,13 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
   Widget build(BuildContext context) {
     final globalUserController = Get.find<GlobalUserInfoController>();
     final activeuser = globalUserController.getSession;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Carona'),
         centerTitle: true,
         actions: [
-          activeuser!.id == controller.rideoffer.owner.id
+          activeuser!.id == controller.rideoffer.value.owner.id
               ? IconButton(
                   onPressed: () => Get.toNamed(Routes.REQUESTS_FOR_RIDE),
                   icon: Icon(Icons.notifications))
@@ -31,10 +32,10 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                   icon: Icon(Icons.person_add))
         ],
       ),
-      body: ListView(
-        children: [
-          Obx(
-            () => SizedBox(
+      body: Obx(
+        () => ListView(
+          children: [
+            SizedBox(
               height: Get.height * 0.5,
               child: Stack(
                 children: [
@@ -98,34 +99,52 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                 ],
               ),
             ),
-          ),
-          Text(
-            ' MOTORISTA:',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Card(child: buildUserCard(controller.rideoffer.owner)),
-          Text(
-            ' PASSAGEIROS:',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          controller.rideoffer.passengers.isNotEmpty
-              ? ListView.builder(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  shrinkWrap: true,
-                  itemCount: controller.rideoffer.passengers.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: buildUserCard(
-                        controller.rideoffer.passengers[index],
-                      ),
-                    );
-                  },
-                )
-              : Center(
-                  child: Text('Sem passageiros até agora'),
-                ),
-        ],
+            Text(
+              ' DATAS:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            ListView.builder(
+              padding: EdgeInsets.only(top: 5, bottom: 5),
+              //scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: controller.rideoffer.value.dates.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Text(
+                  DateFormat("dd-MM-yyyy")
+                      .add_Hms()
+                      .format(controller.rideoffer.value.dates[index]),
+                );
+              },
+            ),
+            Text(
+              ' MOTORISTA:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Card(child: buildUserCard(controller.rideoffer.value.owner)),
+            Text(
+              ' PASSAGEIROS:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            controller.rideoffer.value.passengers.isNotEmpty
+                ? ListView.builder(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    shrinkWrap: true,
+                    itemCount: controller.rideoffer.value.passengers.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: buildUserCard(
+                          controller.rideoffer.value.passengers[index],
+                        ),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Text('Sem passageiros até agora'),
+                  ),
+          ],
+        ),
       ),
     );
   }
