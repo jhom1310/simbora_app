@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
-import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +39,10 @@ class ItemRideOffer extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              Container(
+                height: 3,
+                color: buildStatus(),
+              ),
               Positioned(
                 top: 5,
                 left: 2,
@@ -120,5 +123,18 @@ class ItemRideOffer extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  MaterialColor buildStatus() {
+    switch (rideoffer.status) {
+      case 1:
+        return Colors.green;
+      case 2:
+        return Colors.blue;
+      case 3:
+        return Colors.red;
+    }
+
+    return Colors.green;
   }
 }

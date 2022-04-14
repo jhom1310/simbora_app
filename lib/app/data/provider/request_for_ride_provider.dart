@@ -1,5 +1,6 @@
 import 'package:get/get_connect.dart';
 import 'package:simbora_app/app/data/model/request_for_ride.dart';
+import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/provider/headers.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -7,9 +8,9 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../env.dart';
 
 class RequestForRideConnect extends GetConnect {
-  Future<Response> getAllRequestForRide(User? user) async {
+  Future<Response> getAllRequestForRide(User? user, RideOffer ride) async {
     final response = await get(
-        BASE_URL + '/api/requestforride/?receiver=${user!.id}',
+        BASE_URL + '/api/requestforride/?receiver=${user!.id}&ride=${ride.id}',
         headers: Headers.headers,
         contentType: 'application/json; charset=utf-8');
     Get.log('Requisitando lista de Requisições de Carona');

@@ -16,8 +16,8 @@ class RequestForRideRepository {
   //final AuthApiClient apo = AuthApiClient();
   final RideOfferRepository repositoryRide = RideOfferRepository();
 
-  getAllRequestForRide(User? user) async {
-    final response = await api.getAllRequestForRide(user);
+  getAllRequestForRide(User? user, RideOffer ride) async {
+    final response = await api.getAllRequestForRide(user, ride);
 
     //Sucesso
     if (response.isOk) {

@@ -61,7 +61,7 @@ class DetailRideofferController extends GetxController {
   ////
   @override
   void onInit() {
-    attrideoffer();
+    //attrideoffer();
     super.onInit();
   }
 

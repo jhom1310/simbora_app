@@ -54,6 +54,7 @@ class SplashController extends GetxController {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     globalcontroller.userPosition = await Geolocator.getCurrentPosition();
+
     return globalcontroller.userPosition;
   }
 

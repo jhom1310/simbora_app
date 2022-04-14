@@ -13,7 +13,7 @@ class RideOfferList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
-    var list = controller.getRideOffer();
+    Future<List<RideOffer>> list = controller.getRideOffer(1);
     return Stack(
       children: [
         Container(

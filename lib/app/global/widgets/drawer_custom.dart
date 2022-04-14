@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
+import 'package:simbora_app/app/routes/app_pages.dart';
 
 class DrawerCustom extends StatelessWidget {
   static const padding = EdgeInsets.symmetric(horizontal: 20);
@@ -55,16 +57,14 @@ class DrawerCustom extends StatelessWidget {
                     text: 'Updates',
                     icon: Icons.update,
                     onClicked: () => selectedItem(context, 3),
-                  ),
-                  const SizedBox(height: 24),
-                  Divider(color: Colors.black),
-                  const SizedBox(height: 24),
+                  ), */
+
                   buildMenuItem(
-                    text: 'Plugins',
-                    icon: Icons.account_tree_outlined,
-                    onClicked: () => selectedItem(context, 4),
+                    text: 'Minhas Caronas',
+                    icon: CupertinoIcons.car_detailed,
+                    onClicked: () => Get.toNamed(Routes.MY_RIDEOFFER),
                   ),
-                  const SizedBox(height: 16), */
+                  const SizedBox(height: 16),
                   buildMenuItem(
                     text: 'Sair',
                     icon: Icons.exit_to_app,

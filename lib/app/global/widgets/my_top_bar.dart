@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/global/widgets/drawer_custom.dart';
-import 'package:simbora_app/app/global/widgets/navigation_drawer.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 
 class MyTopBar extends StatefulWidget {

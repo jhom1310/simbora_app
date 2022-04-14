@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/request_for_ride.dart';
+import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/repository/request_for_ride_repository.dart';
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
@@ -9,7 +10,7 @@ import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 import 'package:latlong2/latlong.dart';
 
 class RequestsForRideController extends GetxController {
-  //TODO: Implement RequestsForRideController
+  RideOffer rideoffer = Get.arguments;
   final repository = Get.find<RequestForRideRepository>();
   final globalUserController = Get.find<GlobalUserInfoController>();
 
@@ -30,7 +31,7 @@ class RequestsForRideController extends GetxController {
 
   Future<List<RequestForRide>> getRequestForRide() async {
     User? user = globalUserController.getSession;
-    await repository.getAllRequestForRide(user).then((value) {
+    await repository.getAllRequestForRide(user, rideoffer).then((value) {
       listRequestForRide.assignAll(value);
     }, onError: (err) {
       Get.dialog(FailureDialog('Falha na requisição'));

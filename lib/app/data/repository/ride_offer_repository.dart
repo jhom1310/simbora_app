@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:simbora_app/app/data/model/promotion_model.dart';
 import 'package:simbora_app/app/data/model/ride_offer_model.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
 
 import 'package:simbora_app/app/data/provider/ride_offer_provider.dart';
+import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 import 'package:simbora_app/app/utils/errors_message.dart';
 
@@ -11,8 +13,27 @@ class RideOfferRepository {
   final RideOfferConnect api = RideOfferConnect();
   //final AuthApiClient apo = AuthApiClient();
 
-  getAllRideOffer() async {
-    final response = await api.getAllRideOffer();
+  getAllRideOffer(int status) async {
+    final response = await api.getAllRideOffer(status);
+
+    //Sucesso
+    if (response.isOk) {
+      var list = json.decode(response.bodyString!) as List;
+      List<RideOffer> responseData =
+          list.map((e) => RideOffer.fromJson(e)).toList();
+      return responseData;
+    } else {
+      final String erroMsg = getErroMessage(response.body);
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
+  getMyRideOffer() async {
+    final globalController = Get.find<GlobalUserInfoController>();
+    User? user = globalController.getSession;
+
+    final response = await api.getMyRideOffer(user!);
 
     //Sucesso
     if (response.isOk) {

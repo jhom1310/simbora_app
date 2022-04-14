@@ -33,7 +33,10 @@ class WebSocketController extends GetxController {
 
         switch (action) {
           case 'request_for_ride':
-            sendNotification(json.decode(event)['message']);
+            sendNotificationRequest(json.decode(event)['message']);
+            break;
+          case 'ride_approximate':
+            sendNotificationRide(json.decode(event)['message']);
             break;
           default:
         }
@@ -57,7 +60,7 @@ class WebSocketController extends GetxController {
     isWebsocketRunning = false;
   }
 
-  void sendNotification(content) async {
+  void sendNotificationRequest(content) async {
     String user = content['sender']['first_name'];
     var avatar = content['sender']['avatar'];
     AwesomeNotifications().createNotification(
@@ -67,6 +70,20 @@ class WebSocketController extends GetxController {
             title: "Nova Solicitação",
             body:
                 '${user.substring(0, 15)}... solicitou participar da sua carona.',
+            showWhen: true,
+            payload: {"secret": "Awesome Notifications Rocks!"}));
+  }
+
+  void sendNotificationRide(content) async {
+    String user = content['owner']['first_name'];
+    var avatar = content['owner']['avatar'];
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 100,
+            channelKey: "notifications_channel",
+            title: "Nova Solicitação",
+            body:
+                '${user.substring(0, 15)}... Criou uma carona que passará perto de você.',
             showWhen: true,
             payload: {"secret": "Awesome Notifications Rocks!"}));
   }
