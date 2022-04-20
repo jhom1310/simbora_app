@@ -6,11 +6,10 @@ import 'package:simbora_app/app/global/widgets/drawer_custom.dart';
 import 'package:simbora_app/app/modules/home/controllers/home_controller.dart';
 
 class MyTopBar extends StatefulWidget {
-  final Widget body1, body2;
+  final Widget body1;
   const MyTopBar({
     Key? key,
     required this.body1,
-    required this.body2,
   }) : super(key: key);
 
   @override
@@ -40,29 +39,29 @@ class _MyTabbedPageState extends State<MyTopBar>
     final User? userSession = globalController.getSession;
     var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: scaffoldKey,
-      drawer: DrawerCustom(
-        user: userSession,
-      ),
-      appBar: AppBar(
-        //toolbarHeight: 4,
-        elevation: 0,
-        //backgroundColor: Colors.yellow,
-        leading: IconButton(
-          icon: Icon(
-            Icons.person,
-            color: Colors.black,
+        key: scaffoldKey,
+        drawer: DrawerCustom(
+          user: userSession,
+        ),
+        appBar: AppBar(
+          //toolbarHeight: 4,
+          elevation: 0,
+          //backgroundColor: Colors.yellow,
+          leading: IconButton(
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              scaffoldKey.currentState?.openDrawer();
+            },
           ),
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
-        ),
 
-        title: Text(
-          'SIMBORA',
-        ),
-        centerTitle: true,
-        bottom: TabBar(
+          title: Text(
+            'SIMBORA',
+          ),
+          centerTitle: true,
+          /* bottom: TabBar(
           controller: controller.tabController,
           tabs: [
             Container(
@@ -76,12 +75,8 @@ class _MyTabbedPageState extends State<MyTopBar>
               child: Text("Solicitações de Carona"),
             ),
           ],
+        ), */
         ),
-      ),
-      body: TabBarView(
-        controller: controller.tabController,
-        children: [widget.body1, widget.body2],
-      ),
-    );
+        body: widget.body1);
   }
 }

@@ -16,17 +16,11 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return MyTopBar(
-        body1: RideOfferList(),
-        body2: Obx(
-          () => Container(
-            child: Text(
-              controller.wscontroller.data.toString(),
-            ),
-          ),
-        ));
+      body1: RideOfferList(),
+    );
   }
 
-  Widget biuldPromosList(Future<List<RideOffer>> list) =>
+  /*  Widget biuldPromosList(Future<List<RideOffer>> list) =>
       FutureBuilder<List<RideOffer>>(
         future: list,
         builder: (context, snapshot) {
@@ -64,5 +58,5 @@ class HomeView extends GetView<HomeController> {
           }
           return Center(child: Text('Erro desconhecido'));
         },
-      );
+      ); */
 }
