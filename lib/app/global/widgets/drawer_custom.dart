@@ -35,30 +35,11 @@ class DrawerCustom extends StatelessWidget {
                   const SizedBox(height: 12),
                   Divider(color: Colors.black),
                   const SizedBox(height: 24),
-                  /* buildMenuItem(
-                    text: 'People',
-                    icon: Icons.people,
-                    onClicked: () => selectedItem(context, 0),
-                  ),
-                  const SizedBox(height: 16),
                   buildMenuItem(
-                    text: 'Favourites',
-                    icon: Icons.favorite_border,
-                    onClicked: () => selectedItem(context, 1),
+                    text: 'Meu Local de Encontro',
+                    icon: CupertinoIcons.location,
+                    onClicked: () => Get.toNamed(Routes.MY_RIDEOFFER),
                   ),
-                  const SizedBox(height: 16),
-                  buildMenuItem(
-                    text: 'Workflow',
-                    icon: Icons.workspaces_outline,
-                    onClicked: () => selectedItem(context, 2),
-                  ),
-                  const SizedBox(height: 16),
-                  buildMenuItem(
-                    text: 'Updates',
-                    icon: Icons.update,
-                    onClicked: () => selectedItem(context, 3),
-                  ), */
-
                   buildMenuItem(
                     text: 'Minhas Caronas',
                     icon: CupertinoIcons.car_detailed,

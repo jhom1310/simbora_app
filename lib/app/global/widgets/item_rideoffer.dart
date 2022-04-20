@@ -39,6 +39,19 @@ class ItemRideOffer extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.yellow[700],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text("STATUS"),
+                    ),
+                  )),
               Container(
                 height: 3,
                 color: buildStatus(),
@@ -49,18 +62,9 @@ class ItemRideOffer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.place_outlined),
-                    FutureBuilder<String>(
-                      future: controller.buildAddress(
-                        rideoffer.departurePlace.coordinates[0],
-                        rideoffer.departurePlace.coordinates[1],
-                      ),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text(snapshot.data!);
-                        }
-                        return CircularProgressIndicator();
-                      },
-                    ),
+                    Container(
+                        width: Get.width * 0.8,
+                        child: Text(rideoffer.departure_display))
                   ],
                 ),
               ),
@@ -70,18 +74,9 @@ class ItemRideOffer extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.place_rounded),
-                    FutureBuilder<String>(
-                      future: controller.buildAddress(
-                        rideoffer.destination.coordinates[0],
-                        rideoffer.destination.coordinates[1],
-                      ),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text(snapshot.data!);
-                        }
-                        return CircularProgressIndicator();
-                      },
-                    ),
+                    Container(
+                        width: Get.width * 0.8,
+                        child: Text(rideoffer.destination_display))
                   ],
                 ),
               ),

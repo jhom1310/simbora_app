@@ -120,7 +120,7 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          CupertinoIcons.placemark_fill,
+          CupertinoIcons.location_circle_fill,
           color: Colors.green,
           size: 30.0,
         ),
@@ -133,7 +133,7 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          Icons.stop_circle_outlined,
+          CupertinoIcons.flag_circle_fill,
           color: Colors.red,
           size: 30.0,
         ),

@@ -75,7 +75,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                         Row(
                           children: [
                             Icon(
-                              CupertinoIcons.placemark_fill,
+                              CupertinoIcons.location_circle_fill,
                               color: Colors.green,
                             ),
                             Text(
@@ -86,7 +86,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                         Row(
                           children: [
                             Icon(
-                              Icons.stop_circle_outlined,
+                              CupertinoIcons.flag_circle_fill,
                               color: Colors.red,
                             ),
                             Text(
@@ -190,8 +190,21 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          CupertinoIcons.placemark_fill,
+          CupertinoIcons.location_circle_fill,
           color: Colors.green,
+          size: 30.0,
+        ),
+      ),
+    );
+  }
+
+  Marker buildMarkerRequestSelect(point) {
+    return Marker(
+      point: point,
+      builder: (ctx) => Container(
+        child: Icon(
+          CupertinoIcons.arrowtriangle_down_circle_fill,
+          color: Colors.orange,
           size: 30.0,
         ),
       ),
@@ -203,7 +216,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          Icons.stop_circle_outlined,
+          CupertinoIcons.flag_circle_fill,
           color: Colors.red,
           size: 30.0,
         ),
@@ -245,9 +258,20 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                     MarkerLayerOptions(
                       markers: [
                         buildMarkerDepartureSelect(
+                            controller.pointDeparture.value),
+                        buildMarkerDestinationSelect(
+                            controller.pointDestination.value),
+                        buildMarkerRequestSelect(
                             controller.pointDepartureRequest.value),
                       ],
                     ),
+                    PolylineLayerOptions(polylines: [
+                      Polyline(
+                        points: controller.routelatlng,
+                        strokeWidth: 2.0,
+                        color: Colors.red,
+                      ),
+                    ]),
                   ],
                 ),
               ),

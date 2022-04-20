@@ -58,7 +58,7 @@ class RequestsForRideView extends GetView<RequestsForRideController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          CupertinoIcons.placemark_fill,
+          CupertinoIcons.location_circle_fill,
           color: Colors.green,
           size: 30.0,
         ),

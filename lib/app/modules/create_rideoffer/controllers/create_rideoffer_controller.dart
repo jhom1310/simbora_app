@@ -63,6 +63,7 @@ class CreateRideofferController extends GetxController {
             pointDeparture.value.latitude
           ],
         ),
+        departure_display: '',
         destination: DeparturePlace(
           type: "Point",
           coordinates: [
@@ -70,6 +71,7 @@ class CreateRideofferController extends GetxController {
             pointDestination.value.latitude
           ],
         ),
+        destination_display: '',
         dates: selectedDates,
         status: 1,
         createdAt: DateTime.now(),

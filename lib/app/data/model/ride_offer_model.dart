@@ -16,7 +16,9 @@ class RideOffer {
     required this.owner,
     required this.passengers,
     required this.departurePlace,
+    required this.departure_display,
     required this.destination,
+    required this.destination_display,
     required this.dates,
     required this.status,
     required this.createdAt,
@@ -28,7 +30,9 @@ class RideOffer {
   User owner;
   List<User> passengers;
   DeparturePlace departurePlace;
+  String departure_display;
   DeparturePlace destination;
+  String destination_display;
   List<DateTime> dates;
   int status;
   DateTime createdAt;
@@ -41,7 +45,9 @@ class RideOffer {
         passengers:
             List<User>.from(json["passengers"].map((x) => User.fromJson(x))),
         departurePlace: DeparturePlace.fromJson(json["departure_place"]),
+        departure_display: json["departure_display"],
         destination: DeparturePlace.fromJson(json["destination"]),
+        destination_display: json["destination_display"],
         dates: List<DateTime>.from(json["dates"].map((x) => DateTime.parse(x))),
         status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
@@ -54,7 +60,9 @@ class RideOffer {
         "owner": owner.toJson(),
         "passengers": List<dynamic>.from(passengers.map((x) => x.toJson())),
         "departure_place": departurePlace.toJson(),
+        "departure_display": departure_display,
         "destination": destination.toJson(),
+        "destination_display": destination_display,
         "dates": List<dynamic>.from(dates.map((x) => x.toIso8601String())),
         "status": status,
         "createdAt": createdAt.toIso8601String(),

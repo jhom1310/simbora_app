@@ -34,7 +34,7 @@ class MapCustom extends StatelessWidget {
               point: LatLng(-5.203293, -37.32555),
               builder: (ctx) => Container(
                 child: Icon(
-                  CupertinoIcons.placemark_fill,
+                  CupertinoIcons.location_circle_fill,
                   color: Colors.red,
                   size: 24.0,
                 ),
@@ -46,7 +46,7 @@ class MapCustom extends StatelessWidget {
               point: LatLng(-5.218444, -37.340479),
               builder: (ctx) => Container(
                 child: Icon(
-                  Icons.stop_circle_outlined,
+                  CupertinoIcons.flag_circle_fill,
                   color: Colors.red,
                   size: 24.0,
                 ),
