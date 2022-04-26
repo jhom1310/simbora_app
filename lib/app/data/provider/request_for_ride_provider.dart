@@ -36,7 +36,19 @@ class RequestForRideConnect extends GetConnect {
       {
         "user_pk": request.sender.id,
         "operation": "add",
+        "ride": request.ride.id
       },
+      headers: Headers.headers,
+    );
+    Get.log(response.body.toString());
+    return response;
+  }
+
+  Future<Response> removeRequestForRide(User user, RideOffer ride) async {
+    Get.log('Content: ' + user.toJson().toString() + ride.toJson().toString());
+    final response = await post(
+      BASE_URL + '/api/addorremoverequest/',
+      {"user_pk": user.id, "operation": "remove", "ride": ride.id},
       headers: Headers.headers,
     );
     Get.log(response.body.toString());
@@ -50,6 +62,7 @@ class RequestForRideConnect extends GetConnect {
       {
         "user_pk": request.sender.id,
         "operation": "receiver_deleting",
+        "ride": request.ride.id
       },
       headers: Headers.headers,
     );

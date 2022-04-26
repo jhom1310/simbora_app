@@ -21,16 +21,22 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
         title: Text('Carona'),
         centerTitle: true,
         actions: [
+          IconButton(
+              onPressed: () => Get.toNamed(Routes.CHAT),
+              icon: Icon(Icons.message)),
           activeuser!.id == controller.rideoffer.value.owner.id
               ? IconButton(
                   onPressed: () => Get.toNamed(Routes.REQUESTS_FOR_RIDE,
-                      arguments: controller.rideoffer.value),
+                          arguments: [
+                            controller.rideoffer.value,
+                            controller.routelatlng
+                          ]),
                   icon: Icon(Icons.notifications))
               : IconButton(
                   onPressed: () {
                     showModelRequest(context);
                   },
-                  icon: Icon(Icons.person_add))
+                  icon: Icon(Icons.person_add)),
         ],
       ),
       body: Obx(
@@ -155,13 +161,18 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
   }
 
   Widget buildUserCard(User user) {
+    final globalUserController = Get.find<GlobalUserInfoController>();
+    final activeuser = globalUserController.getSession;
     return Container(
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 30.0,
-            backgroundImage: NetworkImage(user.avatar),
-            backgroundColor: Colors.transparent,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              radius: 30.0,
+              backgroundImage: NetworkImage(user.avatar),
+              backgroundColor: Colors.transparent,
+            ),
           ),
           Container(
             width: Get.width * 0.6,
@@ -180,6 +191,26 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
               ],
             ),
           ),
+          SizedBox(
+            width: 20,
+          ),
+          activeuser!.id == controller.rideoffer.value.owner.id
+              ? activeuser.id == user.id
+                  ? Container()
+                  : Container(
+                      child: IconButton(
+                        icon: Icon(
+                          CupertinoIcons.xmark_circle,
+                          color: Colors.red,
+                          size: 30.0,
+                        ),
+                        onPressed: () {
+                          controller.removePassenger(
+                              user, controller.rideoffer.value);
+                        },
+                      ),
+                    )
+              : Container(),
         ],
       ),
     );
@@ -203,7 +234,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
       point: point,
       builder: (ctx) => Container(
         child: Icon(
-          CupertinoIcons.arrowtriangle_down_circle_fill,
+          CupertinoIcons.stop_circle_fill,
           color: Colors.orange,
           size: 30.0,
         ),

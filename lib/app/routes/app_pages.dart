@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_view.dart';
 import '../modules/create_rideoffer/bindings/create_rideoffer_binding.dart';
 import '../modules/create_rideoffer/views/create_rideoffer_view.dart';
 import '../modules/detail_rideoffer/bindings/detail_rideoffer_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.MY_RIDEOFFER,
       page: () => MyRideofferView(),
       binding: MyRideofferBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => ChatView(),
+      binding: ChatBinding(),
     ),
   ];
 }

@@ -53,13 +53,39 @@ class RequestsForRideView extends GetView<RequestsForRideController> {
     );
   }
 
-  Marker buildMarkerDeparture(point) {
+  Marker buildMarkerDepartureSelect(point) {
     return Marker(
       point: point,
       builder: (ctx) => Container(
         child: Icon(
           CupertinoIcons.location_circle_fill,
           color: Colors.green,
+          size: 30.0,
+        ),
+      ),
+    );
+  }
+
+  Marker buildMarkerRequestSelect(point) {
+    return Marker(
+      point: point,
+      builder: (ctx) => Container(
+        child: Icon(
+          CupertinoIcons.stop_circle_fill,
+          color: Colors.orange,
+          size: 30.0,
+        ),
+      ),
+    );
+  }
+
+  Marker buildMarkerDestinationSelect(point) {
+    return Marker(
+      point: point,
+      builder: (ctx) => Container(
+        child: Icon(
+          CupertinoIcons.flag_circle_fill,
+          color: Colors.red,
           size: 30.0,
         ),
       ),
@@ -147,14 +173,27 @@ class RequestsForRideView extends GetView<RequestsForRideController> {
                     ),
                     MarkerLayerOptions(
                       markers: [
-                        buildMarkerDeparture(LatLng(
+                        buildMarkerRequestSelect(LatLng(
                           request.location.coordinates[1],
                           request.location.coordinates[0],
                         )),
-
-                        //
+                        buildMarkerDepartureSelect(LatLng(
+                          controller.rideoffer.departurePlace.coordinates[1],
+                          controller.rideoffer.departurePlace.coordinates[0],
+                        )),
+                        buildMarkerDestinationSelect(LatLng(
+                          controller.rideoffer.destination.coordinates[1],
+                          controller.rideoffer.destination.coordinates[0],
+                        )),
                       ],
                     ),
+                    PolylineLayerOptions(polylines: [
+                      Polyline(
+                        points: controller.routelatlng,
+                        strokeWidth: 2.0,
+                        color: Colors.red,
+                      ),
+                    ]),
                   ],
                 ),
               )

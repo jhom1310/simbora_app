@@ -9,6 +9,7 @@ import 'dart:convert';
 
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
+import 'package:simbora_app/app/global/widgets/dialogs/ask_dialog.dart';
 
 class DetailRideofferController extends GetxController {
   Rx rideoffer = Get.arguments;
@@ -56,6 +57,17 @@ class DetailRideofferController extends GetxController {
 
   Future<void> attrideoffer() async {
     rideoffer.value = await riderepository.getRideOffer(rideoffer.value.id);
+  }
+
+  Future<void> removePassenger(User user, RideOffer ride) async {
+    Get.dialog(AskDialog(
+            title: "Remover Passageiro",
+            content: "Você tem certeza que deseja remover ${user.firstName}?"))
+        .then((value) async {
+      if (value != null && value) {
+        await repository.removeRequestForRide(user, ride);
+      }
+    });
   }
 
   ////

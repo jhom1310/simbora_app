@@ -86,6 +86,27 @@ class RequestForRideRepository {
     }
   }
 
+  Future<void> removeRequestForRide(User user, RideOffer ride) async {
+    final Response response = await api.removeRequestForRide(user, ride);
+    //isLoading = false;
+
+    //Sucesso
+    if (response.isOk) {
+      //Mostra o dialog de erro
+      await Get.dialog(SuccessDialog('Passageiro removido com sucesso!\n'));
+      final controller = Get.find<DetailRideofferController>();
+      await controller.attrideoffer();
+      //Get.back();
+    } else {
+      /* Map<String, dynamic> reponseData =
+          json.decode(utf8.decode(response.bodyString!.runes.toList())); */
+      final String erroMsg = getErroMessage(response.body);
+
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
   Future<void> rejectRequestForRide(RequestForRide request) async {
     final Response response = await api.rejectRequestForRide(request);
     //isLoading = false;

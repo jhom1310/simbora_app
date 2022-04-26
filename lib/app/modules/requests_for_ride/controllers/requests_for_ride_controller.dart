@@ -10,7 +10,8 @@ import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
 import 'package:latlong2/latlong.dart';
 
 class RequestsForRideController extends GetxController {
-  RideOffer rideoffer = Get.arguments;
+  RideOffer rideoffer = Get.arguments.first;
+  List<LatLng> routelatlng = Get.arguments.last;
   final repository = Get.find<RequestForRideRepository>();
   final globalUserController = Get.find<GlobalUserInfoController>();
 

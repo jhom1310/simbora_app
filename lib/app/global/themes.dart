@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 class Themes {
   final lightTheme = ThemeData.light().copyWith(
+    backgroundColor: Colors.grey[350],
+    //cardColor: Colors.grey[350],
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: Color(0xffffCB05),
     ),
@@ -43,6 +45,7 @@ class Themes {
   );
 
   final darkTheme = ThemeData.dark().copyWith(
+    backgroundColor: Colors.grey[350],
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: Color(0xffffCB05),
     ),
