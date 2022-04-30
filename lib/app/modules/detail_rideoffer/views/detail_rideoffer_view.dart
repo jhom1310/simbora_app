@@ -22,7 +22,8 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () => Get.toNamed(Routes.CHAT),
+              onPressed: () => Get.toNamed(Routes.CHAT,
+                  arguments: controller.rideoffer.value),
               icon: Icon(Icons.message)),
           activeuser!.id == controller.rideoffer.value.owner.id
               ? IconButton(

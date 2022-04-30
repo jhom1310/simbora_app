@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/message_model.dart';
+import 'package:simbora_app/app/data/model/ride_offer_model.dart';
 
 import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/modules/chat/controllers/chat_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../env.dart';
 
@@ -38,6 +41,12 @@ class WebSocketController extends GetxController {
           case 'ride_approximate':
             sendNotificationRide(json.decode(event)['message']);
             break;
+          case 'message_ride':
+            sendNotificationMessage(json.decode(event)['message']);
+            final controllerChat = Get.find<ChatController>();
+            controllerChat.getAllfromRide();
+
+            break;
           default:
         }
       },
@@ -54,7 +63,27 @@ class WebSocketController extends GetxController {
     );
   }
 
-  void closeFoodStream() {
+  /* Future<void> updateListMessages(content) async {
+    MessageRide msg = MessageRide(
+        id: 0,
+        user: User.fromJson(content['user']),
+        ride: RideOffer.fromJson(content['ride']),
+        text: content['text'],
+        createdAt: content['createdAt']);
+    final controllerChat = Get.find<ChatController>();
+    controllerChat.listMessages.insert(0, msg);
+  } */
+
+  Future sendMsg(String acao, {dynamic valor, dynamic index}) async {
+    if (isWebsocketRunning) return; //chaech if its already running
+    channel!.sink.add(json.encode({
+      "action": acao,
+      "value": valor,
+      "index": index,
+    }));
+  }
+
+  void closeStream() {
     //disposes of the stream
     channel!.sink.close();
     isWebsocketRunning = false;
@@ -70,6 +99,19 @@ class WebSocketController extends GetxController {
             title: "Nova Solicitação",
             body:
                 '${user.substring(0, 15)}... solicitou participar da sua carona.',
+            showWhen: true,
+            payload: {"secret": "Awesome Notifications Rocks!"}));
+  }
+
+  void sendNotificationMessage(content) async {
+    String user = content['user']['first_name'];
+    var avatar = content['user']['avatar'];
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 100,
+            channelKey: "notifications_channel",
+            title: "Nova Menssagem",
+            body: '${user.substring(0, 15)}... Enviou uma menssagem...',
             showWhen: true,
             payload: {"secret": "Awesome Notifications Rocks!"}));
   }

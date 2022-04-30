@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/message_model.dart';
 
 import '../controllers/chat_controller.dart';
 
 class ChatView extends GetView<ChatController> {
-  _buildMessage(String message, bool isMe, context) {
+  _buildMessage(MessageRide msg, context) {
+    bool isMe = true;
+    if (controller.useractive!.id != msg.user.id) isMe = false;
     return Container(
       margin: isMe
           ? EdgeInsets.only(
@@ -49,8 +52,7 @@ class ChatView extends GetView<ChatController> {
                 children: [
                   CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(
-                        'https://cdn1.dotesports.com/wp-content/uploads/sites/3/2021/04/22195558/EzV9bB3VIAUCAQV.jpg'),
+                    backgroundImage: NetworkImage(msg.user.avatar),
                   ),
                   SizedBox(
                     width: 3.0,
@@ -58,7 +60,7 @@ class ChatView extends GetView<ChatController> {
                   Container(
                     width: Get.width * 0.5,
                     child: Text(
-                      'ALEFF JONATHAN DA SILVA SOARES DE SOUZA',
+                      msg.user.firstName,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
@@ -68,11 +70,13 @@ class ChatView extends GetView<ChatController> {
                   SizedBox(
                     width: 10.0,
                   ),
-                  Text(
-                    '18:00',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
+                  Container(
+                    child: Text(
+                      "${msg.createdAt.hour}:${msg.createdAt.minute}",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -81,7 +85,7 @@ class ChatView extends GetView<ChatController> {
               Container(
                 width: Get.width * 0.5,
                 child: Text(
-                  message,
+                  msg.text,
                   style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 16.0,
@@ -103,12 +107,17 @@ class ChatView extends GetView<ChatController> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextField(),
+            child: TextField(
+              controller: controller.ctrlText,
+            ),
           ),
           IconButton(
             icon: Icon(Icons.send),
             iconSize: 25.0,
-            onPressed: () {},
+            onPressed: () {
+              controller.sendMessageOnPressed();
+              controller.ctrlText.clear();
+            },
           ),
         ],
       ),
@@ -152,16 +161,15 @@ class ChatView extends GetView<ChatController> {
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
                   ),
-                  child: ListView.builder(
-                    reverse: true,
-                    padding: EdgeInsets.only(top: 15.0),
-                    itemCount: listTest.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final String message = listTest[index][0];
-                      final bool isMe = listTest[index][1];
-                      return _buildMessage(message, isMe, context);
-                    },
-                  ),
+                  child: Obx(() => ListView.builder(
+                        reverse: true,
+                        padding: EdgeInsets.only(top: 15.0),
+                        itemCount: controller.listMessages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _buildMessage(
+                              controller.listMessages[index], context);
+                        },
+                      )),
                 ),
               ),
             ),

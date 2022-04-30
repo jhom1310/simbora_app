@@ -103,7 +103,7 @@ class AuthRepository {
       content: 'Deseja fazer logout do sistema?',
     )).then((value) async {
       if (value != null && value) {
-        wscontroller.closeFoodStream();
+        wscontroller.closeStream();
         //Limpa os dados da sessão
         Store.clearStore();
         final response = await api.logout();
