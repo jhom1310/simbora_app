@@ -15,29 +15,52 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
   Widget build(BuildContext context) {
     final globalUserController = Get.find<GlobalUserInfoController>();
     final activeuser = globalUserController.getSession;
+    bool isPassenger;
+    var contain = controller.rideoffer.value.passengers
+        .where((element) => element.id == activeuser!.id);
+    if (contain.isEmpty) {
+      isPassenger = false;
+    } else {
+      isPassenger = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Carona'),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: () => Get.toNamed(Routes.CHAT,
-                  arguments: controller.rideoffer.value),
-              icon: Icon(Icons.message)),
-          activeuser!.id == controller.rideoffer.value.owner.id
+          isPassenger
               ? IconButton(
-                  onPressed: () => Get.toNamed(Routes.REQUESTS_FOR_RIDE,
-                          arguments: [
-                            controller.rideoffer.value,
-                            controller.routelatlng
-                          ]),
-                  icon: Icon(Icons.notifications))
-              : IconButton(
-                  onPressed: () {
-                    showModelRequest(context);
-                  },
-                  icon: Icon(Icons.person_add)),
+                  onPressed: () => Get.toNamed(Routes.CHAT,
+                      arguments: controller.rideoffer.value),
+                  icon: Icon(Icons.message),
+                )
+              : activeuser!.id == controller.rideoffer.value.owner.id
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        showModelRequest(context);
+                      },
+                      icon: Icon(Icons.person_add),
+                    ),
+          activeuser!.id == controller.rideoffer.value.owner.id
+              ? Row(
+                  children: [
+                    IconButton(
+                        onPressed: () => Get.toNamed(Routes.REQUESTS_FOR_RIDE,
+                                arguments: [
+                                  controller.rideoffer.value,
+                                  controller.routelatlng
+                                ]),
+                        icon: Icon(Icons.notifications)),
+                    IconButton(
+                      onPressed: () => Get.toNamed(Routes.CHAT,
+                          arguments: controller.rideoffer.value),
+                      icon: Icon(Icons.message),
+                    )
+                  ],
+                )
+              : Container()
         ],
       ),
       body: Obx(
@@ -57,6 +80,9 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                         urlTemplate:
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                         subdomains: ['a', 'b', 'c'],
+                        attributionBuilder: (_) {
+                          return Text("© OpenStreetMap contributors");
+                        },
                       ),
                       MarkerLayerOptions(
                         markers: [
@@ -286,6 +312,9 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                       urlTemplate:
                           "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                       subdomains: ['a', 'b', 'c'],
+                      attributionBuilder: (_) {
+                        return Text("© OpenStreetMap contributors");
+                      },
                     ),
                     MarkerLayerOptions(
                       markers: [

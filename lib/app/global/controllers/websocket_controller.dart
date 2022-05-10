@@ -97,8 +97,9 @@ class WebSocketController extends GetxController {
             id: 100,
             channelKey: "notifications_channel",
             title: "Nova Solicitação",
-            body:
-                '${user.substring(0, 15)}... solicitou participar da sua carona.',
+            body: user.length > 15
+                ? '${user.substring(0, 15)}... solicitou participar da sua carona.'
+                : '${user}... solicitou participar da sua carona.',
             showWhen: true,
             payload: {"secret": "Awesome Notifications Rocks!"}));
   }
