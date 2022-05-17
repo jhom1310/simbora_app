@@ -36,7 +36,8 @@ class RequestForRideConnect extends GetConnect {
       {
         "user_pk": request.sender.id,
         "operation": "add",
-        "ride": request.ride.id
+        "ride": request.ride.id,
+        "location": request.location
       },
       headers: Headers.headers,
     );

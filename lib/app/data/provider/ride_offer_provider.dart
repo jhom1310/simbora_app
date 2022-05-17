@@ -51,4 +51,15 @@ class RideOfferConnect extends GetConnect {
     Get.log(response.body.toString());
     return response;
   }
+
+  Future<Response> updateRideOffer(RideOffer rideoffer) async {
+    Get.log('Content: ' + rideoffer.toJson().toString());
+    final response = await put(
+      BASE_URL + '/api/rideoffer/${rideoffer.id}/',
+      rideoffer.toJson(),
+      headers: Headers.headers,
+    );
+    Get.log(response.body.toString());
+    return response;
+  }
 }

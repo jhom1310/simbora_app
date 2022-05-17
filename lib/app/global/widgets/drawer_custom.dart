@@ -38,7 +38,7 @@ class DrawerCustom extends StatelessWidget {
                   buildMenuItem(
                     text: 'Meu Local de Encontro',
                     icon: CupertinoIcons.location,
-                    onClicked: () => Get.toNamed(Routes.MY_RIDEOFFER),
+                    onClicked: () => Get.toNamed(Routes.MY_LOCATION),
                   ),
                   buildMenuItem(
                     text: 'Minhas Caronas',

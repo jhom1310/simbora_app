@@ -30,7 +30,7 @@ class HomeController extends GetxController {
 
   @override
   void onReady() {
-    setLocationUser();
+    //setLocationUser();
     super.onReady();
   }
 

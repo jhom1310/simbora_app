@@ -30,6 +30,9 @@ class UserRepository {
     //Sucesso
     if (response.isOk) {
       print("Localização do usuario atualizada com sucesso");
+      await Get.dialog(
+          SuccessDialog('Ponto de encontro atualizado com sucesso'));
+      Get.back();
     } else {
       print("Falha ao atualizar localização do usuario");
     }

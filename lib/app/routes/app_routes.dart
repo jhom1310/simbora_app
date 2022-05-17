@@ -12,6 +12,7 @@ abstract class Routes {
   static const REQUESTS_FOR_RIDE = _Paths.REQUESTS_FOR_RIDE;
   static const MY_RIDEOFFER = _Paths.MY_RIDEOFFER;
   static const CHAT = _Paths.CHAT;
+  static const MY_LOCATION = _Paths.MY_LOCATION;
 }
 
 abstract class _Paths {
@@ -24,4 +25,5 @@ abstract class _Paths {
   static const REQUESTS_FOR_RIDE = '/requests-for-ride';
   static const MY_RIDEOFFER = '/my-rideoffer';
   static const CHAT = '/chat';
+  static const MY_LOCATION = '/my-location';
 }

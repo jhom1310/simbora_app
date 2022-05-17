@@ -14,12 +14,16 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar Oferta de Carona'),
+        title: controller.rideoffer != null
+            ? Text('Editar Oferta de Carona')
+            : Text('Criar Oferta de Carona'),
         centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {
-                controller.addOnPressed();
+                controller.isEdit
+                    ? controller.updatePressed()
+                    : controller.addOnPressed();
               },
               icon: Icon(Icons.save))
         ],
@@ -94,6 +98,7 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black54)),
                       child: SfDateRangePicker(
+                        initialSelectedDates: controller.initialSelectedDates,
                         enablePastDates: false,
                         onSelectionChanged: controller.onSelectionChanged,
                         view: DateRangePickerView.month,

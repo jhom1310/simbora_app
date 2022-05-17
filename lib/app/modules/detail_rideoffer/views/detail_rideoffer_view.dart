@@ -47,6 +47,14 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
               ? Row(
                   children: [
                     IconButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.CREATE_RIDEOFFER,
+                              arguments: controller.rideoffer);
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                        )),
+                    IconButton(
                         onPressed: () => Get.toNamed(Routes.REQUESTS_FOR_RIDE,
                                 arguments: [
                                   controller.rideoffer.value,
@@ -57,7 +65,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                       onPressed: () => Get.toNamed(Routes.CHAT,
                           arguments: controller.rideoffer.value),
                       icon: Icon(Icons.message),
-                    )
+                    ),
                   ],
                 )
               : Container()
@@ -90,6 +98,9 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                               controller.pointDeparture.value),
                           buildMarkerDestinationSelect(
                               controller.pointDestination.value),
+                          buildMarkerDestinationSelect(
+                              controller.pointDestination.value),
+                          ...buildMarkerPassengers()
                           //
                         ],
                       ),
@@ -137,19 +148,21 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
               ' DATAS:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            ListView.builder(
-              padding: EdgeInsets.only(top: 5, bottom: 5),
-              //scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: controller.rideoffer.value.dates.length,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Text(
-                  DateFormat("dd-MM-yyyy")
-                      .add_Hms()
-                      .format(controller.rideoffer.value.dates[index]),
-                );
-              },
+            Card(
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: 5, bottom: 5),
+                //scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: controller.rideoffer.value.dates.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Text(
+                    DateFormat("dd-MM-yyyy")
+                        .add_Hms()
+                        .format(controller.rideoffer.value.dates[index]),
+                  );
+                },
+              ),
             ),
             Text(
               ' MOTORISTA:',
@@ -267,6 +280,25 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
         ),
       ),
     );
+  }
+
+  List<Marker> buildMarkerPassengers() {
+    List<Marker> markers = List.empty(growable: true);
+    var locations = controller.getPassengersLocations();
+    for (var item in locations) {
+      markers.add(Marker(
+        point: item,
+        builder: (ctx) => Container(
+          child: Icon(
+            CupertinoIcons.stop_circle_fill,
+            color: Colors.orange,
+            size: 30.0,
+          ),
+        ),
+      ));
+    }
+
+    return markers;
   }
 
   Marker buildMarkerDestinationSelect(point) {

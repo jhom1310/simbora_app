@@ -25,15 +25,24 @@ class DetailRideofferController extends GetxController {
           rideoffer.value.destination.coordinates[0])
       .obs;
 
-  late List<LatLng> routelatlng = List<LatLng>.from(
+  late RxList<LatLng> routelatlng = List<LatLng>.from(
       jsonDecode(rideoffer.value.route.replaceAll("'", "\""))['route']
-          .map((x) => LatLng(x[1], x[0])));
+          .map((x) => LatLng(x[1], x[0]))).obs;
 
   //Sollicitação de Carona
   final globalcontroller = Get.find<GlobalController>();
   late Rx pointDepartureRequest = LatLng(globalcontroller.userPosition.latitude,
           globalcontroller.userPosition.longitude)
       .obs;
+
+  RxList<LatLng> passengerslocations = RxList.empty(growable: true);
+  List<LatLng> getPassengersLocations() {
+    for (var location in rideoffer.value.passengers_locations) {
+      passengerslocations.value.add(LatLng(
+          location.location.coordinates[1], location.location.coordinates[0]));
+    }
+    return passengerslocations.value;
+  }
 
   Future<void> addOnPressed() async {
     final User? userSession = globalUserController.getSession;

@@ -17,7 +17,6 @@ class RideOfferList extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: Get.height * 0.74,
           child: FutureBuilder<List<RideOffer>>(
             future: list,
             builder: (context, snapshot) {
@@ -56,9 +55,6 @@ class RideOfferList extends StatelessWidget {
               return Center(child: Text('Erro desconhecido'));
             },
           ),
-        ),
-        SizedBox(
-          height: 30,
         ),
         Align(
           alignment: Alignment.bottomCenter,

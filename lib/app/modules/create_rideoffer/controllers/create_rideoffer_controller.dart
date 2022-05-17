@@ -10,6 +10,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:latlong2/latlong.dart';
 
 class CreateRideofferController extends GetxController {
+  Rx? rideoffer = Get.arguments;
+
   final globalcontroller = Get.find<GlobalController>();
   final repository = Get.find<RideOfferRepository>();
   final globalUserController = Get.find<GlobalUserInfoController>();
@@ -21,6 +23,10 @@ class CreateRideofferController extends GetxController {
   late Rx pointDestination = LatLng(0, 0).obs;
 
   RxList<DateTime> selectedDates = <DateTime>[].obs;
+
+  List<DateTime>? initialSelectedDates;
+
+  bool isEdit = false;
 
   Future<void> onSelectionChanged(
       DateRangePickerSelectionChangedArgs args) async {
@@ -51,11 +57,15 @@ class CreateRideofferController extends GetxController {
     final User? userSession = globalUserController.getSession;
     if (pointDestination.value.longitude == 0) {
       Get.dialog(FailureDialog('Selecione um destino'));
+    }
+    if (selectedDates.isEmpty) {
+      Get.dialog(FailureDialog('Selecione uma data'));
     } else {
       var rideoffer = RideOffer(
         id: 0,
         owner: userSession!,
         passengers: [],
+        passengers_locations: [],
         departurePlace: DeparturePlace(
           type: "Point",
           coordinates: [
@@ -82,8 +92,50 @@ class CreateRideofferController extends GetxController {
     }
   }
 
+  Future<void> updatePressed() async {
+    final User? userSession = globalUserController.getSession;
+    if (pointDestination.value.longitude == 0) {
+      Get.dialog(FailureDialog('Selecione um destino'));
+    }
+    if (selectedDates.isEmpty) {
+      Get.dialog(FailureDialog('Selecione uma data'));
+    } else {
+      rideoffer?.value.departurePlace.coordinates[0] =
+          pointDeparture.value.longitude;
+      rideoffer?.value.departurePlace.coordinates[1] =
+          pointDeparture.value.latitude;
+
+      rideoffer?.value.destination.coordinates[0] =
+          pointDestination.value.longitude;
+      rideoffer?.value.destination.coordinates[1] =
+          pointDestination.value.latitude;
+
+      rideoffer?.value.dates = selectedDates.value;
+
+      await repository.updateRideOffer(rideoffer?.value);
+    }
+  }
+
   @override
   void onInit() {
+    if (rideoffer != null) {
+      isEdit = true;
+      //partida
+      pointDeparture.value.longitude =
+          rideoffer?.value.departurePlace.coordinates[0];
+      pointDeparture.value.latitude =
+          rideoffer?.value.departurePlace.coordinates[1];
+
+      //destino
+      pointDestination.value.longitude =
+          rideoffer?.value.destination.coordinates[0];
+
+      pointDestination.value.latitude =
+          rideoffer?.value.destination.coordinates[1];
+
+      initialSelectedDates = rideoffer?.value.dates;
+      selectedDates.value = rideoffer?.value.dates;
+    }
     super.onInit();
   }
 

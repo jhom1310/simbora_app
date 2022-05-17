@@ -7,6 +7,8 @@ import 'package:simbora_app/app/data/model/user_model.dart';
 import 'package:simbora_app/app/data/provider/ride_offer_provider.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/global/widgets/dialogs/response_dialogs.dart';
+import 'package:simbora_app/app/modules/detail_rideoffer/controllers/detail_rideoffer_controller.dart';
+import 'package:simbora_app/app/routes/app_pages.dart';
 import 'package:simbora_app/app/utils/errors_message.dart';
 
 class RideOfferRepository {
@@ -72,6 +74,29 @@ class RideOfferRepository {
       //Mostra o dialog de erro
       await Get.dialog(SuccessDialog('Oferta de Carona criada com sucesso!\n'));
       Get.back();
+    } else {
+      /* Map<String, dynamic> reponseData =
+          json.decode(utf8.decode(response.bodyString!.runes.toList())); */
+      final String erroMsg = getErroMessage(response.body);
+
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
+  Future<void> updateRideOffer(RideOffer rideoffer) async {
+    //isLoading = true;
+    final Response response = await api.updateRideOffer(rideoffer);
+    //isLoading = false;
+
+    //Sucesso
+    if (response.isOk) {
+      //Mostra o dialog de erro
+      await Get.dialog(
+          SuccessDialog('Oferta de Carona editada com sucesso!\n'));
+      final controller = Get.find<DetailRideofferController>();
+      await controller.attrideoffer();
+      Get.toNamed(Routes.MY_RIDEOFFER);
     } else {
       /* Map<String, dynamic> reponseData =
           json.decode(utf8.decode(response.bodyString!.runes.toList())); */

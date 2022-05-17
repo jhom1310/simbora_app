@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:simbora_app/app/data/model/passenger_location.dart';
 import 'package:simbora_app/app/data/model/user_model.dart';
 
 RideOffer rideOfferFromJson(String str) => RideOffer.fromJson(json.decode(str));
@@ -24,11 +25,13 @@ class RideOffer {
     required this.createdAt,
     required this.updateAt,
     required this.route,
+    required this.passengers_locations,
   });
 
   int id;
   User owner;
   List<User> passengers;
+  List<PassengerLocation> passengers_locations;
   DeparturePlace departurePlace;
   String departure_display;
   DeparturePlace destination;
@@ -44,6 +47,9 @@ class RideOffer {
         owner: User.fromJson(json["owner"]),
         passengers:
             List<User>.from(json["passengers"].map((x) => User.fromJson(x))),
+        passengers_locations: List<PassengerLocation>.from(
+            json["passengers_locations"]
+                .map((x) => PassengerLocation.fromJson(x))),
         departurePlace: DeparturePlace.fromJson(json["departure_place"]),
         departure_display: json["departure_display"],
         destination: DeparturePlace.fromJson(json["destination"]),
@@ -59,6 +65,8 @@ class RideOffer {
         "id": id,
         "owner": owner.toJson(),
         "passengers": List<dynamic>.from(passengers.map((x) => x.toJson())),
+        "passengers_locations":
+            List<dynamic>.from(passengers_locations.map((x) => x.toJson())),
         "departure_place": departurePlace.toJson(),
         "departure_display": departure_display,
         "destination": destination.toJson(),
