@@ -2,17 +2,23 @@ import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:simbora_app/app/data/model/user_model.dart';
+import 'package:simbora_app/app/data/provider/headers.dart';
+import 'package:simbora_app/app/database/auth_token.dart';
+import 'package:simbora_app/app/database/store.dart';
+import 'package:simbora_app/app/database/store_keys.dart';
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
+import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
   final globalcontroller = Get.find<GlobalController>();
+  final globalControllerUser = Get.find<GlobalUserInfoController>();
 
   @override
   void onReady() {
-    super.onReady();
-
     loading();
+    super.onReady();
   }
 
   /// Determine the current position of the device.
@@ -65,8 +71,18 @@ class SplashController extends GetxController {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    Timer(Duration(seconds: 2), () {
-      Get.offAndToNamed(Routes.LOGIN);
+    Timer(Duration(seconds: 2), () async {
+      if (Store.hasKey(StoreKeys.TOKEN)) {
+        var userData = await Store.getMap('SESSION');
+        globalControllerUser.setSession(User.fromJson(userData!));
+        //Adiquire o token de acesso
+        String token = Store.getString('TOKEN');
+        AuthToken.token = token;
+        Headers.headers = {'Authorization': 'Token ' + AuthToken.token!};
+        Get.offAndToNamed(Routes.HOME);
+      } else {
+        Get.offAndToNamed(Routes.LOGIN);
+      }
     });
   }
 }

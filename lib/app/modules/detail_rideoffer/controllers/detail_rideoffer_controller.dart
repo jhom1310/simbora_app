@@ -66,6 +66,18 @@ class DetailRideofferController extends GetxController {
 
   Future<void> attrideoffer() async {
     rideoffer.value = await riderepository.getRideOffer(rideoffer.value.id);
+    routelatlng = List<LatLng>.from(
+        jsonDecode(rideoffer.value.route.replaceAll("'", "\""))['route']
+            .map((x) => LatLng(x[1], x[0]))).obs;
+
+    passengerslocations = RxList.empty(growable: true);
+    List<LatLng> getPassengersLocations() {
+      for (var location in rideoffer.value.passengers_locations) {
+        passengerslocations.value.add(LatLng(location.location.coordinates[1],
+            location.location.coordinates[0]));
+      }
+      return passengerslocations.value;
+    }
   }
 
   Future<void> removePassenger(User user, RideOffer ride) async {

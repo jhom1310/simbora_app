@@ -106,7 +106,7 @@ class DetailRideofferView extends GetView<DetailRideofferController> {
                       ),
                       PolylineLayerOptions(polylines: [
                         Polyline(
-                          points: controller.routelatlng,
+                          points: controller.routelatlng.value,
                           strokeWidth: 2.0,
                           color: Colors.red,
                         ),
