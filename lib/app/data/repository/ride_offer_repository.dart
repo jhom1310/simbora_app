@@ -50,6 +50,25 @@ class RideOfferRepository {
     }
   }
 
+  getMyRideOfferParticipate() async {
+    final globalController = Get.find<GlobalUserInfoController>();
+    User? user = globalController.getSession;
+
+    final response = await api.getMyRideOfferParticipate(user!);
+
+    //Sucesso
+    if (response.isOk) {
+      var list = json.decode(response.bodyString!) as List;
+      List<RideOffer> responseData =
+          list.map((e) => RideOffer.fromJson(e)).toList();
+      return responseData;
+    } else {
+      final String erroMsg = getErroMessage(response.body);
+      //Mostra o dialog de erro
+      Get.dialog(FailureDialog(erroMsg));
+    }
+  }
+
   getRideOffer(int id) async {
     final response = await api.getRideOffer(id);
 

@@ -9,11 +9,13 @@ import 'package:simbora_app/app/database/store.dart';
 import 'package:simbora_app/app/database/store_keys.dart';
 import 'package:simbora_app/app/global/controllers/global_controller.dart';
 import 'package:simbora_app/app/global/controllers/global_user_info_controller.dart';
+import 'package:simbora_app/app/global/controllers/websocket_controller.dart';
 import 'package:simbora_app/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
   final globalcontroller = Get.find<GlobalController>();
   final globalControllerUser = Get.find<GlobalUserInfoController>();
+  final wscontroller = Get.find<WebSocketController>();
 
   @override
   void onReady() {
@@ -79,6 +81,7 @@ class SplashController extends GetxController {
         String token = Store.getString('TOKEN');
         AuthToken.token = token;
         Headers.headers = {'Authorization': 'Token ' + AuthToken.token!};
+        wscontroller.startStream(AuthToken.token!);
         Get.offAndToNamed(Routes.HOME);
       } else {
         Get.offAndToNamed(Routes.LOGIN);

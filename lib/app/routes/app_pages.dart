@@ -14,6 +14,8 @@ import '../modules/my_location/bindings/my_location_binding.dart';
 import '../modules/my_location/views/my_location_view.dart';
 import '../modules/my_rideoffer/bindings/my_rideoffer_binding.dart';
 import '../modules/my_rideoffer/views/my_rideoffer_view.dart';
+import '../modules/participate_rideoffer/bindings/participate_rideoffer_binding.dart';
+import '../modules/participate_rideoffer/views/participate_rideoffer_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/requests_for_ride/bindings/requests_for_ride_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.MY_LOCATION,
       page: () => MyLocationView(),
       binding: MyLocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.PARTICIPATE_RIDEOFFER,
+      page: () => ParticipateRideofferView(),
+      binding: ParticipateRideofferBinding(),
     ),
   ];
 }

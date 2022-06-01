@@ -31,6 +31,16 @@ class RideOfferConnect extends GetConnect {
     return response;
   }
 
+  Future<Response> getMyRideOfferParticipate(User owner) async {
+    final response = await get(
+        BASE_URL + '/api/rideoffer?passenger=${owner.id}',
+        headers: Headers.headers,
+        contentType: 'application/json; charset=utf-8');
+    Get.log('Requisitando lista de Ofertas de Carona');
+
+    return response;
+  }
+
   ///Busca uma oferta de carona por id
   Future<Response> getRideOffer(int id) async {
     final response = await get(BASE_URL + '/api/rideoffer/$id',

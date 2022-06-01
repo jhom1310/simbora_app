@@ -13,6 +13,7 @@ abstract class Routes {
   static const MY_RIDEOFFER = _Paths.MY_RIDEOFFER;
   static const CHAT = _Paths.CHAT;
   static const MY_LOCATION = _Paths.MY_LOCATION;
+  static const PARTICIPATE_RIDEOFFER = _Paths.PARTICIPATE_RIDEOFFER;
 }
 
 abstract class _Paths {
@@ -26,4 +27,5 @@ abstract class _Paths {
   static const MY_RIDEOFFER = '/my-rideoffer';
   static const CHAT = '/chat';
   static const MY_LOCATION = '/my-location';
+  static const PARTICIPATE_RIDEOFFER = '/participate-rideoffer';
 }

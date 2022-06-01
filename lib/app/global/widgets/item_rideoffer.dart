@@ -47,10 +47,10 @@ class ItemRideOffer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       color: Colors.yellow[700],
                     ),
-                    child: Padding(
+                    /* child: Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Text("STATUS"),
-                    ),
+                    ), */
                   )),
               Container(
                 height: 3,

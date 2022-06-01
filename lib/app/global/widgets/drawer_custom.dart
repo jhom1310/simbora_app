@@ -45,6 +45,11 @@ class DrawerCustom extends StatelessWidget {
                     icon: CupertinoIcons.car_detailed,
                     onClicked: () => Get.toNamed(Routes.MY_RIDEOFFER),
                   ),
+                  buildMenuItem(
+                    text: 'Caronas que sou Passageiro',
+                    icon: CupertinoIcons.car_detailed,
+                    onClicked: () => Get.toNamed(Routes.PARTICIPATE_RIDEOFFER),
+                  ),
                   const SizedBox(height: 16),
                   buildMenuItem(
                     text: 'Sair',
