@@ -19,13 +19,18 @@ class CreateRideofferView extends GetView<CreateRideofferController> {
             : Text('Criar Oferta de Carona'),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: () {
-                controller.isEdit
-                    ? controller.updatePressed()
-                    : controller.addOnPressed();
-              },
-              icon: Icon(Icons.save))
+          Obx(
+            () => controller.loading.value
+                ? CircularProgressIndicator()
+                : IconButton(
+                    onPressed: () {
+                      controller.isEdit
+                          ? controller.updatePressed()
+                          : controller.addOnPressed();
+                    },
+                    icon: Icon(Icons.save),
+                  ),
+          )
         ],
       ),
       body: Stack(

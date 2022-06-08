@@ -60,7 +60,7 @@ class LoginView extends GetView<LoginController> {
                         SizedBox(height: 30.0),
                         InputTF(
                           icon: Icon(Icons.person, color: Colors.grey),
-                          text: 'Email',
+                          text: 'Login Sigaa',
                           //controller: controller,
                           ctrlText: controller.ctrlEmail,
                           validator: (email) => emailValidator(email),
@@ -70,16 +70,20 @@ class LoginView extends GetView<LoginController> {
                         ),
                         PasswordTF(
                           controller: controller,
-                          text: 'Senha',
+                          text: 'Senha Sigaa',
                           ctrlText: controller.ctrlPass,
                           validator: (password) => passwordValidator(password),
                         ),
                         SizedBox(height: 10.0),
                         ForgotPasswordBtn(),
                         RememberMeCheckbox(),
-                        LoginBtn(
-                          text: 'Entrar',
-                          onPressed: controller.loginOnPressedSigaa,
+                        Obx(
+                          () => controller.loading.value
+                              ? CircularProgressIndicator()
+                              : LoginBtn(
+                                  text: 'Entrar',
+                                  onPressed: controller.loginOnPressedSigaa,
+                                ),
                         ),
                         SizedBox(height: 10.0),
                         SignupBtn(),

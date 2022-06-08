@@ -11,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 
 class CreateRideofferController extends GetxController {
   Rx? rideoffer = Get.arguments;
-
+  Rx<bool> loading = Rx<bool>(false);
   final globalcontroller = Get.find<GlobalController>();
   final repository = Get.find<RideOfferRepository>();
   final globalUserController = Get.find<GlobalUserInfoController>();
@@ -54,11 +54,14 @@ class CreateRideofferController extends GetxController {
   }
 
   Future<void> addOnPressed() async {
+    loading.value = true;
     final User? userSession = globalUserController.getSession;
     if (pointDestination.value.longitude == 0) {
+      loading.value = false;
       Get.dialog(FailureDialog('Selecione um destino'));
     }
     if (selectedDates.isEmpty) {
+      loading.value = false;
       Get.dialog(FailureDialog('Selecione uma data'));
     } else {
       var rideoffer = RideOffer(
@@ -89,6 +92,7 @@ class CreateRideofferController extends GetxController {
         route: '2',
       );
       await repository.createRideOffer(rideoffer);
+      loading.value = false;
     }
   }
 

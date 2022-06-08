@@ -42,6 +42,7 @@ class HomeController extends GetxController {
     await repository.getAllRideOffer(status).then((value) {
       listRideOffer.assignAll(value);
     }, onError: (err) {
+      print(err);
       Get.dialog(FailureDialog('Falha na requisição'));
     });
     print('loadData');

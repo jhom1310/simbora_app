@@ -20,6 +20,7 @@ class LoginController extends GetxController {
   final show = true.obs;
   final showIcon = Icons.visibility_off.obs;
   final loginSuccess = true.obs;
+  Rx<bool> loading = Rx<bool>(false);
 
   @override
   void onInit() {
@@ -45,22 +46,26 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginOnPressed() async {
+    loading.value = true;
+
     var login = AuthLogin(email: ctrlEmail.text, password: ctrlPass.text);
     await repository.authLogin(login).then((auth) {
+      loading.value = false;
       if (auth != null) {
         Get.offAllNamed(Routes.HOME);
       }
       //loading.value = false;
     }).catchError((err) {
-      //loading.value = false;
       print('erro no controller: $err');
     });
   }
 
   Future<void> loginOnPressedSigaa() async {
+    loading.value = true;
     var login =
         AuthLoginSigaa(username: ctrlEmail.text, password: ctrlPass.text);
     await repository.authLoginSigaa(login).then((auth) {
+      loading.value = false;
       if (auth != null) {
         //box.write('auth', auth);
         Get.find<WebSocketController>().startStream(AuthToken.token!);
@@ -68,7 +73,6 @@ class LoginController extends GetxController {
       }
       //loading.value = false;
     }).catchError((err) {
-      //loading.value = false;
       print('erro no controller: $err');
     });
   }
