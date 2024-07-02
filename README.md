@@ -1,16 +1,3 @@
-# simbora_app
+Carpooling é um sistema de transporte baseado no uso compartilhado de carros particulares, permitindo que as pessoas partilhem uma viagem para um destino em comum. Contribuir neste tema tem como motivação a falta de transportes públicos de qualidade, aumento no valor dos combustíveis e o grande impacto ao meio ambiente causado pela emissão de gases poluentes dos carros. Portanto, o presente trabalho tem por objetivo conceber e desenvolver uma plataforma, considerando o contexto do ambiente universitário, que permita aproximar pessoas com disposição para oferecer caronas e pessoas que desejem solicitar carona, além disso, validar a solução proposta com estudantes da UFERSA, dentre esses dois grupos de perfis. Além das contribuições no campos da Computação, por meio de artefatos de software, a solução proposta também busca contribuir em questões ambientais, sociais e econômicas no âmbito da mobilidade urbana da comunidade universitária
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://repositorio.ufersa.edu.br/items/2f7883c5-4bad-4bc5-b51d-dd3acb9ebc22
